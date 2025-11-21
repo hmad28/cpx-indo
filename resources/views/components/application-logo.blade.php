@@ -1,0 +1,1 @@
+<img src="{{ asset('images/logo cpx.jpeg') }}" alt="" class="w-50">
