@@ -12,6 +12,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\BestSellerController;
 use App\Http\Controllers\Admin\ProductController;
@@ -122,13 +123,9 @@ Route::get('/custom', function () {
 Route::get('/product-page/{product:slug}', [ProductController::class, 'show'])->name('product-page');
 
 
-Route::get('/dashboard', function () {
-    $productCount = Product::count();
-    $testimonialCount = Testimonial::count();
-    $faqCount = Faq::count();
-    $categoryCount = Category::count();
-    return view('dashboard.index', compact('productCount', 'testimonialCount', 'faqCount', 'categoryCount'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
