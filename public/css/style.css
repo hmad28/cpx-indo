@@ -31,17 +31,17 @@
 }
 
 .hamburger-line {
-    @apply w-[30px] h-[2px] my-2 block bg-white ;
+    @apply w-[30px] h-[2px] my-2 block bg-white;
 }
 
 .navbar-fixed {
-    @apply fixed z-[9999] bg-amber-100 top-0 transition duration-300 ease-in-out;
+    @apply fixed z-[9999] bg-black/90 top-0 transition duration-300 ease-in-out;
     backdrop-filter: blur(90px);
-    box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.2)
+    box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
 .hamburger-active > span:nth-child(1) {
-    @apply  rotate-45;
+    @apply rotate-45;
 }
 
 .hamburger-active > span:nth-child(2) {
@@ -49,7 +49,7 @@
 }
 
 .hamburger-active > span:nth-child(3) {
-    @apply  -rotate-45;
+    @apply -rotate-45;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -86,48 +86,49 @@
   }
 
 :root {
-  --cpx-ink: #111111;
-  --cpx-muted: #6b625c;
-  --cpx-paper: #f7f1e8;
-  --cpx-card: #fffaf3;
-  --cpx-red: #dc2626;
-  --cpx-red-dark: #991b1b;
-  --cpx-gold: #f5b301;
+  --cpx-ink: #0a0a0a;
+  --cpx-muted: #71717a;
+  --cpx-paper: #111111;
+  --cpx-card: #1a1a1a;
+  --cpx-red: #e11d48;
+  --cpx-red-dark: #be123c;
+  --cpx-gold: #f59e0b;
+  --cpx-surface: #ffffff;
 }
 
 body {
-  background:
-    radial-gradient(circle at top left, rgba(220, 38, 38, 0.12), transparent 32rem),
-    linear-gradient(180deg, #fffaf3 0%, var(--cpx-paper) 48%, #ffffff 100%);
-  color: var(--cpx-ink);
+  background: var(--cpx-paper);
+  color: var(--cpx-surface);
 }
 
 .cpx-shell {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 0%, rgba(245, 179, 1, 0.16), transparent 26rem),
-    radial-gradient(circle at 90% 10%, rgba(220, 38, 38, 0.14), transparent 24rem),
+    radial-gradient(circle at 10% 0%, rgba(225, 29, 72, 0.08), transparent 26rem),
+    radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.02), transparent 24rem),
+    radial-gradient(circle at 50% 80%, rgba(225, 29, 72, 0.04), transparent 30rem),
     var(--cpx-paper);
 }
 
 .cpx-container {
-  width: min(100% - 2rem, 1280px);
+  width: min(100% - 3rem, 1320px);
   margin-inline: auto;
+  padding-inline: 1.5rem;
 }
 
 .cpx-section {
   padding-block: clamp(4rem, 7vw, 7rem);
+  position: relative;
 }
 
 .cpx-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 999px;
-  border: 1px solid rgba(220, 38, 38, 0.18);
-  background: rgba(220, 38, 38, 0.08);
-  padding: 0.45rem 0.8rem;
-  color: var(--cpx-red-dark);
+  border-left: 4px solid var(--cpx-red);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  color: var(--cpx-red);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -137,15 +138,22 @@ body {
 .cpx-heading {
   font-family: var(--font-heading);
   letter-spacing: 0.02em;
-  line-height: 0.95;
+  line-height: 0.9;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .cpx-card {
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  border-radius: 1.5rem;
-  background: rgba(255, 250, 243, 0.86);
-  box-shadow: 0 24px 70px rgba(17, 17, 17, 0.08);
-  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.cpx-card:hover {
+  border-color: rgba(225, 29, 72, 0.4);
+  box-shadow: 0 24px 70px rgba(225, 29, 72, 0.1);
 }
 
 .cpx-btn-primary,
@@ -153,44 +161,50 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  padding: 0.85rem 1.25rem;
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
   font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
 }
 
 .cpx-btn-primary {
-  background: var(--cpx-red);
+  background: linear-gradient(135deg, #e11d48, #dc2626);
   color: white;
-  box-shadow: 0 16px 35px rgba(220, 38, 38, 0.24);
-}
-
-.cpx-btn-secondary {
-  border: 1px solid rgba(17, 17, 17, 0.12);
-  background: white;
-  color: var(--cpx-ink);
-}
-
-.cpx-btn-primary:hover,
-.cpx-btn-secondary:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 16px 35px rgba(225, 29, 72, 0.3);
+  transform: skewX(-2deg);
 }
 
 .cpx-btn-primary:hover {
-  background: var(--cpx-red-dark);
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  box-shadow: 0 20px 45px rgba(225, 29, 72, 0.4);
+  transform: skewX(-2deg) translateY(-2px);
+}
+
+.cpx-btn-secondary {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+}
+
+.cpx-btn-secondary:hover {
+  background: white;
+  color: var(--cpx-ink);
+  transform: translateY(-2px);
 }
 
 .cpx-product-card {
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  border-radius: 1.35rem;
+  border: 1px solid rgba(229, 231, 235, 1);
+  border-radius: 0.75rem;
   background: white;
-  box-shadow: 0 18px 45px rgba(17, 17, 17, 0.08);
   overflow: hidden;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
 .cpx-product-card:hover {
-  border-color: rgba(220, 38, 38, 0.38);
-  box-shadow: 0 24px 55px rgba(220, 38, 38, 0.13);
-  transform: translateY(-4px);
+  border-color: rgba(229, 231, 235, 1);
+  border-bottom: 3px solid var(--cpx-red);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
 }
