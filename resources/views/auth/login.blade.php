@@ -1,4 +1,10 @@
 <x-guest-layout>
+    <div class="mb-8">
+        <p class="text-xs font-black uppercase tracking-[0.3em] text-red-600">Admin Access</p>
+        <h1 class="mt-2 text-3xl font-black text-gray-950">Masuk ke Dashboard</h1>
+        <p class="mt-2 text-sm leading-6 text-gray-500">Gunakan email atau username untuk mengelola katalog CPX.</p>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -27,19 +33,19 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded-sm border-gray-300 text-indigo-600 shadow-xs focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                <input id="remember_me" type="checkbox" class="rounded-sm border-gray-300 text-red-600 shadow-xs focus:ring-red-500" name="remember">
+                <span class="ms-2 text-sm font-semibold text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-400 hover:text-gray-500 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                <a class="text-sm font-bold text-gray-500 hover:text-red-600 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button>
                 {{ __('Log in') }}
             </x-primary-button>
         </div>

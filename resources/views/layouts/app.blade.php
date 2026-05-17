@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <title>CPX Dashboard</title>
         <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
         <!-- Fonts -->
@@ -16,14 +15,14 @@
 
         @stack('style')
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased text-gray-950">
+        <div class="min-h-screen cpx-admin-shell">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow-sm">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="border-b border-black/5 bg-white/75 shadow-sm backdrop-blur-xl">
+                    <div class="max-w-7xl mx-auto py-7 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

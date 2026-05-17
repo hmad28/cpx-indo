@@ -10,19 +10,21 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
 </head>
-<body>
+<body class="cpx-shell">
     <main>
         <x-header></x-header>
 
-        <section class="bg-white pt-25 pb-8 md:pt-30 2xl:pt-35 antialiased"> {{-- Tingkatkan padding responsive; hapus dark mode classes --}}
-            <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8"> {{-- Tingkatkan padding untuk responsiveness --}}
-                <div class="flex items-center justify-center md:justify-between mb-4 md:mb-8"> {{-- Center di mobile, justify-between di md; tambah mb --}}
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-black">Penilaian Toko</h2> {{-- Ukuran text responsive; ganti gray-900 ke black --}}
+        <section class="cpx-section pt-32 md:pt-40 antialiased">
+            <div class="cpx-container">
+                <div class="mb-8 rounded-[2rem] bg-gray-950 p-7 text-white shadow-2xl md:p-10">
+                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Customer Stories</span>
+                    <h2 class="cpx-heading mt-4 text-6xl md:text-8xl">Penilaian Toko</h2>
+                    <p class="mt-4 max-w-2xl text-white/65">Cerita pelanggan dan komunitas yang sudah pakai jersey CPX.</p>
                 </div>
 
-                <div class="space-y-6 md:space-y-8 divide-y divide-black"> {{-- Ganti divide-gray ke black; space-y lebih lega --}}
+                <div class="grid gap-5">
                     @foreach ( $testimonials as $testimonial )
-                        <article class="py-6 md:py-8 flex flex-col md:flex-row md:items-start gap-4 md:gap-6 bg-white rounded-lg border border-black p-4 md:p-6 shadow-sm hover:shadow-md hover:border-red-600 transition-all duration-300"> {{-- Wrap dalam article/card; tambah border black, hover red; responsive flex --}}
+                        <article class="cpx-card flex flex-col gap-4 p-5 transition hover:-translate-y-1 hover:border-red-300 md:flex-row md:items-start md:gap-6 md:p-6">
                             <div class="shrink-0 w-full md:w-48 lg:w-64 space-y-3"> {{-- Ukuran fixed width responsive; space-y lebih --}}
                                 <div class="flex items-center gap-1"> {{-- Gap lebih kecil --}}
                                     {{-- Asumsikan rating fixed 5 untuk sekarang; jika ada $testimonial->rating, ubah loop ke $i < $testimonial->rating untuk filled, sisanya outline --}}
@@ -34,7 +36,7 @@
                                 </div>
 
                                 <div class="space-y-1"> {{-- Space-y lebih kecil --}}
-                                    <p class="text-sm md:text-base font-semibold text-black">{{ $testimonial->name }}</p> {{-- Text size responsive --}}
+                                    <p class="text-sm md:text-base font-black text-black">{{ $testimonial->name }}</p>
                                     <p class="text-xs md:text-sm text-black/70">{{ $testimonial->created_at->format('F d, Y') }}</p> {{-- Ganti gray-500 ke black/70 untuk subtle; size responsive --}}
                                 </div>
 
@@ -51,7 +53,7 @@
                             </div>
 
                             <div class="flex-1 min-w-0 space-y-4"> {{-- Tambah min-w-0 untuk truncate jika perlu --}}
-                                <div class="text-sm md:text-base text-black leading-relaxed">{!! $testimonial->message !!}</div> {{-- Ganti gray-500 ke black; size dan leading responsive untuk readability --}}
+                                <div class="text-sm md:text-base text-black/75 leading-relaxed">{!! $testimonial->message !!}</div>
                                 
                                 @if($testimonial->photo)
                                     <div class="flex justify-start"> {{-- Tambah label dan wrapper untuk clarity sebagai photo produk --}}

@@ -18,14 +18,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', function () {
-    return view('welcome');
-});
-
-Route::get('/profile', function () {
-    return view('profile.edit');
-});
-
 Route::get('/', function () {
     $products = Product::with(['category', 'diskons']) // Eager load diskons
         // ->latest() // Uncomment jika mau sort terbaru
