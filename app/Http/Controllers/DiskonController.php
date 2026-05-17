@@ -20,7 +20,7 @@ class DiskonController extends Controller
     // Store: Tambah diskon baru
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'discount_percentage' => 'required|numeric|min:0|max:100',
             'start_date' => 'required|date|after_or_equal:today',
@@ -28,7 +28,7 @@ class DiskonController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        Diskon::create($request->all());
+        Diskon::create($validated);
 
         return redirect()->route('diskons.index')->with('success', 'Diskon berhasil ditambahkan!');
     }

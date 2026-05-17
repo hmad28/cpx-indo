@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="flex-1 min-w-0 space-y-4"> {{-- Tambah min-w-0 untuk truncate jika perlu --}}
-                                <div class="text-sm md:text-base text-black/75 leading-relaxed">{!! $testimonial->message !!}</div>
+                                <div class="text-sm md:text-base text-black/75 leading-relaxed">{!! \App\Support\HtmlSanitizer::clean($testimonial->message) !!}</div>
                                 
                                 @if($testimonial->photo)
                                     <div class="flex justify-start"> {{-- Tambah label dan wrapper untuk clarity sebagai photo produk --}}

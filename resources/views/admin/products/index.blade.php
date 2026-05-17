@@ -154,7 +154,7 @@
                                                     {{-- Deskripsi --}}
                                                     @if($product->description)
                                                         <div class="text-sm text-gray-700 mb-3 line-clamp-3 leading-relaxed">
-                                                            {!! Str::limit(strip_tags($product->description), 120) !!}
+                                                            {{ Str::limit(strip_tags($product->description), 120) }}
                                                         </div>
                                                     @endif
 
@@ -245,7 +245,7 @@
                                                 </div>
                                             </div>
                                             <div class="mt-2 text-sm text-gray-700 line-clamp-2">
-                                                {!! $product->description !!}
+                                                {!! \App\Support\HtmlSanitizer::clean($product->description) !!}
                                             </div>
                                             <div class="mt-2 flex flex-wrap gap-1">
                                                 @if($product->sizes->isNotEmpty())
@@ -354,7 +354,7 @@
                                         <div class="sm:col-span-2">
                                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 :text-white">Deskripsi</label>
                                             <textarea id="description" name="description" rows="4" class="description hidden p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" placeholder="Deskripsi Produk (MAKS. 2000 Karakter)"></textarea>
-                                            <div id="editor-create" class="editor">{!! old('description') !!}</div>
+                                            <div id="editor-create" class="editor">{!! \App\Support\HtmlSanitizer::clean(old('description', '')) !!}</div>
                                             @error('description')
                                                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                             @enderror
@@ -536,7 +536,7 @@
                                             <div class="sm:col-span-2">
                                                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 :text-white">Deskripsi</label>
                                                 <textarea id="description" name="description" rows="5" class="description hidden p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" placeholder="Write a description...">{{ old('description', $product->description) }}</textarea>
-                                                <div id="editor-update-{{ $product->id }}" class="editor">{!! old('description', $product->description) !!}</div> {{-- Tambah ID unik --}}
+                                                <div id="editor-update-{{ $product->id }}" class="editor">{!! \App\Support\HtmlSanitizer::clean(old('description', $product->description)) !!}</div> {{-- Tambah ID unik --}}
                                                 @error('description')
                                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                                 @enderror
@@ -556,7 +556,7 @@
 
                                             <div 
                                                 x-data='{
-                                                    advantages: {!! json_encode($kelebihanArray) !!},
+                                                    advantages: @js($kelebihanArray),
                                                     addAdvantage() { this.advantages.push(""); },
                                                     removeAdvantage(index) { 
                                                         if (this.advantages.length > 1) { 
@@ -669,7 +669,7 @@
                                     </div>
                                     <dl>
                                         <dt class="my-2 font-semibold leading-none text-gray-900 :text-white">Details</dt>
-                                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 :text-gray-400">{!! $product->description !!}</dd>
+                                        <dd class="mb-4 font-light text-gray-500 sm:mb-5 :text-gray-400">{!! \App\Support\HtmlSanitizer::clean($product->description) !!}</dd>
                                         <dt class="mb-2 font-semibold leading-none text-gray-900 :text-white">Category</dt>
                                         <dd class="mb-4 font-light text-gray-500 sm:mb-5 :text-gray-400">{{ $product->category->name }}</dd>
                                         <dt class="mb-2 font-semibold leading-none text-gray-900 :text-white">Kelebihan</dt>

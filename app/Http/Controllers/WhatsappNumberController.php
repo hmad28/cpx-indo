@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\WhatsappNumber;
@@ -32,16 +33,16 @@ class WhatsappNumberController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'page_name' => 'required|string|max:255',
-            'position' => 'required|string|max:50',
-            'phone_number' => 'required|string|max:20',
+        $validated = $request->validate([
+            'page_name' => 'required|in:Home,About,Custom,ProductPage,OurProduct,Cart,Testimonial',
+            'position' => 'required|in:footer,product_card,cart_section,custom_section',
+            'phone_number' => 'required|string|max:20|regex:/^[0-9+\-\s()]+$/',
             'display_name' => 'required|string|max:255',
             'message' => 'nullable|string|max:500',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
         ]);
 
-        WhatsappNumber::create($request->only(['page_name', 'position', 'phone_number', 'display_name', 'message', 'is_active']));
+        WhatsappNumber::create($validated);
 
         return redirect()->route('admin.whatsapp-numbers.index')
             ->with('success', 'Nomor WhatsApp berhasil ditambahkan!');
@@ -49,17 +50,16 @@ class WhatsappNumberController extends Controller
 
     public function update(Request $request, WhatsappNumber $whatsappNumber)
     {
-        $request->validate([
-            'page_name' => 'required|string|max:50', // Ganti position jadi page_name
-            'phone_number' => 'required|string|max:20',
+        $validated = $request->validate([
+            'page_name' => 'required|in:Home,About,Custom,ProductPage,OurProduct,Cart,Testimonial',
+            'position' => 'sometimes|in:footer,product_card,cart_section,custom_section',
+            'phone_number' => 'required|string|max:20|regex:/^[0-9+\-\s()]+$/',
             'display_name' => 'required|string|max:255',
             'message' => 'nullable|string|max:500',
-            'is_active' => 'required|boolean'
+            'is_active' => 'required|boolean',
         ]);
 
-        $data = $request->only(['page_name', 'phone_number', 'display_name', 'message', 'is_active']);
-
-        $whatsappNumber->update($data);
+        $whatsappNumber->update($validated);
 
         return redirect()->route('admin.whatsapp-numbers.index')
             ->with('success', 'Nomor WhatsApp berhasil diperbarui!');
