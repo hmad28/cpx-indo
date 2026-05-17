@@ -8,11 +8,11 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Models\WhatsappNumber;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\BestSellerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -122,13 +122,7 @@ Route::get('/custom', function () {
 Route::get('/product-page/{product:slug}', [ProductController::class, 'show'])->name('product-page');
 
 
-Route::get('/dashboard', function () {
-    $productCount = Product::count();
-    $testimonialCount = Testimonial::count();
-    $faqCount = Faq::count();
-    $categoryCount = Category::count();
-    return view('dashboard.index', compact('productCount', 'testimonialCount', 'faqCount', 'categoryCount'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -156,22 +150,22 @@ Route::get('/size-guide', function () {
     return view('sizes');
 })->name('sizes');
 
-Route::prefix('/dashboard/manage-best-seller')->name('best-seller.')->group(function () {
-    Route::get('/', [BestSellerController::class, 'index'])->name('index');
-    Route::post('/', [BestSellerController::class, 'store'])->name('store');
-    Route::delete('/{id}', [BestSellerController::class, 'destroy'])->name('destroy');
-});
+Route::middleware('auth')->group(function () {
+    Route::prefix('/dashboard/manage-best-seller')->name('best-seller.')->group(function () {
+        Route::get('/', [BestSellerController::class, 'index'])->name('index');
+        Route::post('/', [BestSellerController::class, 'store'])->name('store');
+        Route::delete('/{id}', [BestSellerController::class, 'destroy'])->name('destroy');
+    });
 
-// Routes untuk kelola diskon
-Route::get('/diskons', [DiskonController::class, 'index'])->name('diskons.index');
-Route::post('/diskons', [DiskonController::class, 'store'])->name('diskons.store');
-Route::delete('/diskons/{diskon}', [DiskonController::class, 'destroy'])->name('diskons.destroy');
+    // Routes untuk kelola diskon
+    Route::get('/diskons', [DiskonController::class, 'index'])->name('diskons.index');
+    Route::post('/diskons', [DiskonController::class, 'store'])->name('diskons.store');
+    Route::delete('/diskons/{diskon}', [DiskonController::class, 'destroy'])->name('diskons.destroy');
 
-
-
-Route::prefix('admin')->name('admin.')->group(function () {  // Jika pakai prefix admin
-    Route::get('/whatsapp-numbers', [WhatsappNumberController::class, 'index'])->name('whatsapp-numbers.index');
-    Route::post('/whatsapp-numbers', [WhatsappNumberController::class, 'store'])->name('whatsapp-numbers.store');
-    Route::put('/whatsapp-numbers/{whatsappNumber}', [WhatsappNumberController::class, 'update'])->name('whatsapp-numbers.update');
-    Route::delete('/whatsapp-numbers/{whatsappNumber}', [WhatsappNumberController::class, 'destroy'])->name('whatsapp-numbers.destroy');
+    Route::prefix('admin')->name('admin.')->group(function () {  // Jika pakai prefix admin
+        Route::get('/whatsapp-numbers', [WhatsappNumberController::class, 'index'])->name('whatsapp-numbers.index');
+        Route::post('/whatsapp-numbers', [WhatsappNumberController::class, 'store'])->name('whatsapp-numbers.store');
+        Route::put('/whatsapp-numbers/{whatsappNumber}', [WhatsappNumberController::class, 'update'])->name('whatsapp-numbers.update');
+        Route::delete('/whatsapp-numbers/{whatsappNumber}', [WhatsappNumberController::class, 'destroy'])->name('whatsapp-numbers.destroy');
+    });
 });

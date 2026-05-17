@@ -1,152 +1,244 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+        <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-red-600">CPX Command Center</p>
+                <h2 class="text-2xl font-bold text-gray-950">Dashboard Admin</h2>
+            </div>
+            <a href="{{ route('home') }}" class="inline-flex items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-800 transition hover:border-red-500 hover:text-red-600">
+                Lihat Website
+            </a>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="md:max-w-7xl 2xl:max-w-full mx-auto sm:px-6 lg:px-8 2xl:px-15">
-            <div class="bg-white overflow-hidden shadow-xs sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="w-full mb-6">
-                        <h1 class="text-3xl font-bold mb-2">Selamat Datang di Dashboard Admin</h1>
-                        <p class="text-gray-600">Kelola konten dan pengaturan situs web CPX dengan mudah melalui dashboard ini.</p>
-                    </div>
-                    <div class="w-full flex gap-2 md:flex-wrap md:gap-6 mb-8">
-                        {{-- Card 1: Jumlah Produk --}}
-                        <div class="flex-1 w-1/3 p-2 md:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-sm border border-blue-100 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
-                            <div class="flex items-center md:justify-between mb-2 md:mb-4">
-                                <div class="flex flex-col md:flex-row justify-center text-center gap-3 md:gap-0 items-center">
-                                    <div class="p-1 md:p-3 bg-blue-100 rounded-full md:mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 md:h-6 md:w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 6m0 0l-8-6m8 6V7m-4 4h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="text-sm md:text-xl font-semibold text-gray-800">Jumlah Produk Saat Ini</h2>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-end justify-center">
-                                <div class="text-center">
-                                    <p class="text-xs md:text-sm text-gray-600 mb-1">Total Produk</p>
-                                    <p class="text-xl md:text-3xl font-bold text-blue-700">{{ $productCount }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 pt-2 md:mt-4 md:pt-4 border-t border-blue-200">
-                                <div class="flex justify-between text-xs text-gray-500">
-                                    <a href="{{ route('products.index') }}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">
-                                        Lihat detail →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+    @php
+        $statCards = [
+            ['label' => 'Produk', 'value' => $productCount, 'caption' => 'Item katalog aktif', 'route' => route('products.index'), 'accent' => 'from-red-600 to-orange-500'],
+            ['label' => 'Kategori', 'value' => $categoryCount, 'caption' => 'Segmentasi katalog', 'route' => route('categories.index'), 'accent' => 'from-gray-900 to-gray-700'],
+            ['label' => 'Best Seller', 'value' => $bestSellerCount, 'caption' => 'Produk unggulan', 'route' => route('best-seller.index'), 'accent' => 'from-amber-500 to-yellow-400'],
+            ['label' => 'Diskon Aktif', 'value' => $activeDiscountCount, 'caption' => 'Promo sedang berjalan', 'route' => route('diskons.index'), 'accent' => 'from-emerald-600 to-teal-500'],
+            ['label' => 'Testimoni', 'value' => $testimonialCount, 'caption' => 'Bukti sosial', 'route' => route('testimonials.index'), 'accent' => 'from-blue-600 to-sky-500'],
+            ['label' => 'Nomor WA', 'value' => $activeWhatsappCount, 'caption' => 'Kontak aktif', 'route' => route('admin.whatsapp-numbers.index'), 'accent' => 'from-lime-600 to-green-500'],
+        ];
 
-                        {{-- Card 2: Jumlah Kategori --}}
-                        <div class="flex-1 w-1/3 p-2 md:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-sm border border-green-100 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
-                            <div class="flex items-center md:justify-between mb-2 md:mb-4">
-                                <div class="flex flex-col md:flex-row justify-center text-center gap-3 md:gap-0 items-center">
-                                    <div class="p-1 md:p-3 bg-green-100 rounded-full md:mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 md:h-6 md:w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="text-sm md:text-xl font-semibold text-gray-800">Jumlah Kategori Saat Ini</h2>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-end justify-center">
-                                <div class="text-center">
-                                    <p class="text-xs md:text-sm text-gray-600 mb-1">Total Kategori</p>
-                                    <p class="text-xl md:text-3xl font-bold text-green-700">{{ $categoryCount }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 pt-2 md:mt-4 md:pt-4 border-t border-green-200">
-                                <div class="flex justify-between text-xs text-gray-500">
-                                    <a href="{{ route('categories.index') }}" class="text-green-600 hover:text-green-800 font-medium transition-colors">
-                                        Lihat detail →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+        $quickActions = [
+            ['title' => 'Kelola Produk', 'description' => 'Tambah katalog, foto, ukuran, dan deskripsi produk.', 'route' => route('products.index'), 'button' => 'Buka Produk'],
+            ['title' => 'Atur Best Seller', 'description' => 'Pilih produk yang perlu tampil paling menonjol.', 'route' => route('best-seller.index'), 'button' => 'Pilih Produk'],
+            ['title' => 'Jalankan Diskon', 'description' => 'Buat promo dengan periode dan persentase yang jelas.', 'route' => route('diskons.index'), 'button' => 'Kelola Diskon'],
+            ['title' => 'Update FAQ', 'description' => 'Jawab pertanyaan umum pelanggan dari halaman About.', 'route' => route('faq.index'), 'button' => 'Kelola FAQ'],
+            ['title' => 'Nomor WhatsApp', 'description' => 'Pastikan CTA chat mengarah ke admin yang tepat.', 'route' => route('admin.whatsapp-numbers.index'), 'button' => 'Atur Nomor'],
+            ['title' => 'Testimoni', 'description' => 'Kurasi ulasan pelanggan agar landing page lebih meyakinkan.', 'route' => route('testimonials.index'), 'button' => 'Buka Testimoni'],
+        ];
 
-                        {{-- Card 3: Jumlah Testimonial --}}
-                        <div class="flex-1 w-1/3 p-2 md:p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl shadow-sm border border-yellow-100 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
-                            <div class="flex items-center md:justify-between mb-2 md:mb-4">
-                                <div class="flex flex-col md:flex-row justify-center text-center gap-3 md:gap-0 items-center">
-                                    <div class="p-1 md:p-3 bg-yellow-100 rounded-full md:mr-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 md:h-6 md:w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="text-sm md:text-xl font-semibold text-gray-800">Jumlah Testimoni Saat Ini</h2>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-end justify-center">
-                                <div class="text-center">
-                                    <p class="text-xs md:text-sm text-gray-600 mb-1">Total Testimoni</p>
-                                    <p class="text-xl md:text-3xl font-bold text-yellow-700">{{ $testimonialCount }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-2 pt-2 md:mt-4 border-t border-yellow-200">
-                                <div class="flex justify-between text-xs text-gray-500">
-                                    <a href="{{ route('testimonials.index') }}" class="text-yellow-600 hover:text-yellow-800 font-medium transition-colors">
-                                        Lihat detail →
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        $healthChecks = [
+            ['label' => 'Produk sudah tersedia', 'done' => $productCount > 0],
+            ['label' => 'Kategori sudah dibuat', 'done' => $categoryCount > 0],
+            ['label' => 'Best seller sudah dipilih', 'done' => $bestSellerCount > 0],
+            ['label' => 'Nomor WhatsApp aktif', 'done' => $activeWhatsappCount > 0],
+            ['label' => 'FAQ pelanggan terisi', 'done' => $faqCount > 0],
+        ];
+        $completedChecks = collect($healthChecks)->where('done', true)->count();
+        $healthScore = count($healthChecks) > 0 ? round(($completedChecks / count($healthChecks)) * 100) : 0;
+    @endphp
 
-                    <div class="p-6 border rounded mb-4">
-                        <h2 class="text-2xl mb-1">Best Seller</h2>
-                        <p class="mb-2">Tambahkan produk ke daftar Best Seller. Produk yang ditandai sebagai Best Seller akan tampil di bagian khusus agar lebih menonjol dan mudah dilihat pelanggan.</p>
-                        <div class="mt-3 md:space-y-3">
-                            <a href="{{ route('best-seller.index') }}" 
-                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                                Kelola Best Seller
+    <div class="bg-gray-100 py-8 sm:py-10">
+        <div class="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+            <section class="overflow-hidden rounded-[2rem] bg-gray-950 text-white shadow-xl">
+                <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.4fr_0.8fr] lg:p-10">
+                    <div class="space-y-6">
+                        <div class="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-red-100">
+                            Ringkasan {{ now()->format('d M Y') }}
+                        </div>
+                        <div>
+                            <h1 class="max-w-3xl text-3xl font-black tracking-tight sm:text-5xl">
+                                Selamat datang, {{ Auth::user()->name }}.
+                            </h1>
+                            <p class="mt-4 max-w-2xl text-sm leading-6 text-gray-300 sm:text-base">
+                                Pantau kesehatan katalog, promo, konten, dan jalur WhatsApp dari satu tempat agar operasional CPX lebih cepat.
+                            </p>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:flex-row">
+                            <a href="{{ route('products.index') }}" class="inline-flex items-center justify-center rounded-full bg-red-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-700">
+                                Kelola Produk
                             </a>
-                        </div>
-                    </div>
-                    
-                    <div class="p-6 border rounded mb-4">
-                        <h2 class="text-2xl mb-1">FAQ</h2>
-                        <p class="mb-2">Tambahkan pertanyaan-pertanyaan yang sering di tanyakan ke daftar FAQ. Pertanyaan-pertanyaan pada daftar FAQ akan tampil di bagian about.</p>
-                        <div class="mt-3 md:space-y-3">
-                            <a href="{{ route('faq.index') }}" 
-                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                                Kelola FAQ
+                            <a href="{{ route('diskons.index') }}" class="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-gray-950">
+                                Cek Promo Aktif
                             </a>
                         </div>
                     </div>
 
-                    <div class="p-6 border rounded mb-4">
-                        <h2 class="text-2xl mb-1">Diskon Produk</h2>
-                        <p class="mb-2">Tambahkan diskon pada produk-produk spesial.</p>
-                        <div class="mt-3 md:space-y-3">
-                            <a href="/diskons" 
-                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                                Kelola Diskon Produk
-                            </a>
+                    <div class="rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-300">Skor kelengkapan</p>
+                                <p class="text-4xl font-black">{{ $healthScore }}%</p>
+                            </div>
+                            <div class="rounded-full bg-white px-4 py-2 text-sm font-bold text-gray-950">
+                                {{ $completedChecks }}/{{ count($healthChecks) }} siap
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="p-6 border rounded">
-                        <h2 class="text-2xl mb-1">Nomor WA Admin</h2>
-                        <p class="mb-2">Tambahkan nomor WA admin.</p>
-                        <div class="mt-3 md:space-y-3">
-                            <a href="{{ route('admin.whatsapp-numbers.index') }}" 
-                            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                                Kelola Nomor WA Admin
-                            </a>
+                        <div class="mt-5 h-3 overflow-hidden rounded-full bg-white/10">
+                            <div class="h-full rounded-full bg-red-500" style="width: {{ $healthScore }}%"></div>
+                        </div>
+                        <div class="mt-5 space-y-3">
+                            @foreach ($healthChecks as $check)
+                                <div class="flex items-center justify-between rounded-2xl bg-white/10 px-4 py-3 text-sm">
+                                    <span>{{ $check['label'] }}</span>
+                                    <span class="rounded-full px-3 py-1 text-xs font-bold {{ $check['done'] ? 'bg-green-400 text-green-950' : 'bg-white/10 text-gray-200' }}">
+                                        {{ $check['done'] ? 'Siap' : 'Perlu dicek' }}
+                                    </span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                @foreach ($statCards as $card)
+                    <a href="{{ $card['route'] }}" class="group overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-500">{{ $card['label'] }}</p>
+                                <p class="mt-2 text-4xl font-black text-gray-950">{{ $card['value'] }}</p>
+                                <p class="mt-1 text-sm text-gray-500">{{ $card['caption'] }}</p>
+                            </div>
+                            <div class="h-12 w-12 rounded-2xl bg-gradient-to-br {{ $card['accent'] }} shadow-lg"></div>
+                        </div>
+                        <div class="mt-5 flex items-center text-sm font-bold text-red-600">
+                            Lihat detail
+                            <span class="ml-2 transition group-hover:translate-x-1">-&gt;</span>
+                        </div>
+                    </a>
+                @endforeach
+            </section>
+
+            <section class="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
+                <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">Katalog</p>
+                            <h3 class="text-2xl font-black text-gray-950">Produk terbaru</h3>
+                        </div>
+                        <a href="{{ route('products.index') }}" class="text-sm font-bold text-red-600 hover:text-red-700">Kelola semua</a>
+                    </div>
+
+                    <div class="mt-6 space-y-4">
+                        @forelse ($latestProducts as $product)
+                            <div class="flex items-center gap-4 rounded-2xl border border-gray-100 p-3 transition hover:border-red-200 hover:bg-red-50/40">
+                                @if ($product->image)
+                                    <img src="{{ asset('images/'.$product->image) }}" alt="{{ $product->name }}" class="h-16 w-16 rounded-2xl object-cover">
+                                @else
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100 text-lg font-black text-gray-500">
+                                        {{ strtoupper(substr($product->name, 0, 1)) }}
+                                    </div>
+                                @endif
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate font-bold text-gray-950">{{ $product->name }}</p>
+                                    <p class="text-sm text-gray-500">{{ $product->category->name ?? 'Tanpa kategori' }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-gray-950">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                    <p class="text-xs text-gray-500">{{ $product->created_at?->format('d M Y') }}</p>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="rounded-2xl border border-dashed border-gray-300 p-8 text-center">
+                                <p class="text-lg font-bold text-gray-950">Belum ada produk</p>
+                                <p class="mt-1 text-sm text-gray-500">Tambahkan produk pertama agar katalog mulai tampil.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">Kategori</p>
+                                <h3 class="text-2xl font-black text-gray-950">Distribusi produk</h3>
+                            </div>
+                            <a href="{{ route('categories.index') }}" class="text-sm font-bold text-red-600 hover:text-red-700">Atur</a>
+                        </div>
+
+                        <div class="mt-6 space-y-4">
+                            @forelse ($topCategories as $category)
+                                @php
+                                    $categoryPercent = $productCount > 0 ? round(($category->products_count / $productCount) * 100) : 0;
+                                @endphp
+                                <div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="font-bold text-gray-800">{{ $category->name }}</span>
+                                        <span class="text-gray-500">{{ $category->products_count }} produk</span>
+                                    </div>
+                                    <div class="mt-2 h-2 overflow-hidden rounded-full bg-gray-100">
+                                        <div class="h-full rounded-full bg-gray-950" style="width: {{ $categoryPercent }}%"></div>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="rounded-2xl border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500">
+                                    Belum ada kategori untuk ditampilkan.
+                                </p>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">Promo</p>
+                                <h3 class="text-2xl font-black text-gray-950">Diskon berjalan</h3>
+                            </div>
+                            <a href="{{ route('diskons.index') }}" class="text-sm font-bold text-red-600 hover:text-red-700">Atur</a>
+                        </div>
+
+                        <div class="mt-6 space-y-3">
+                            @forelse ($discountsEndingSoon as $discount)
+                                <div class="rounded-2xl bg-gray-50 p-4">
+                                    <div class="flex items-center justify-between gap-3">
+                                        <p class="font-bold text-gray-950">{{ $discount->product->name ?? 'Produk tidak ditemukan' }}</p>
+                                        <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-black text-red-700">
+                                            {{ rtrim(rtrim(number_format($discount->discount_percentage, 2), '0'), '.') }}%
+                                        </span>
+                                    </div>
+                                    <p class="mt-1 text-sm text-gray-500">
+                                        Berakhir {{ \Illuminate\Support\Carbon::parse($discount->end_date)->format('d M Y') }}
+                                    </p>
+                                </div>
+                            @empty
+                                <p class="rounded-2xl border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500">
+                                    Belum ada diskon aktif yang berjalan.
+                                </p>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-600">Aksi Cepat</p>
+                        <h3 class="text-2xl font-black text-gray-950">Fitur dashboard</h3>
+                    </div>
+                    <p class="max-w-2xl text-sm text-gray-500">Pintasan operasional untuk mempercepat update katalog, promo, konten, dan kanal penjualan.</p>
+                </div>
+
+                <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    @foreach ($quickActions as $action)
+                        <a href="{{ $action['route'] }}" class="group rounded-3xl border border-gray-200 p-5 transition hover:border-red-300 hover:bg-red-50/50">
+                            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gray-950 text-sm font-black text-white">
+                                {{ $loop->iteration }}
+                            </div>
+                            <h4 class="mt-4 text-lg font-black text-gray-950">{{ $action['title'] }}</h4>
+                            <p class="mt-2 text-sm leading-6 text-gray-500">{{ $action['description'] }}</p>
+                            <div class="mt-4 text-sm font-bold text-red-600">
+                                {{ $action['button'] }} <span class="inline-block transition group-hover:translate-x-1">-&gt;</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </section>
         </div>
     </div>
 </x-app-layout>
