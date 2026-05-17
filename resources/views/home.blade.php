@@ -22,15 +22,20 @@
                 <img src="{{ asset('images/main3.png') }}" class="w-full flex-shrink-0 object-cover" />
             </div>
 
-            <div class="absolute inset-0 bg-gradient-to-r from-black/82 via-black/42 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+
+            <!-- Angular decorative shapes -->
+            <div class="absolute top-20 right-10 w-64 h-64 bg-red-500/10 rotate-12 hidden lg:block"></div>
+            <div class="absolute bottom-32 right-1/4 w-48 h-48 bg-red-500/5 -rotate-6 hidden lg:block"></div>
+
             <div class="absolute inset-0 flex items-center">
                 <div class="cpx-container pt-16 text-white">
-                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Custom Jersey Studio</span>
-                    <h1 class="cpx-heading mt-5 max-w-4xl text-6xl md:text-8xl">Bikin jersey tim yang kelihatan beda.</h1>
-                    <p class="mt-6 max-w-2xl text-base leading-8 text-white/75 md:text-lg">
+                    <span class="cpx-eyebrow">Custom Jersey Studio</span>
+                    <h1 class="cpx-heading mt-6 max-w-4xl text-7xl md:text-9xl leading-none">Bikin jersey tim yang kelihatan beda.</h1>
+                    <p class="mt-6 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
                         CPX bantu tim, komunitas, dan brand tampil solid lewat desain custom, bahan nyaman, dan proses produksi yang rapi.
                     </p>
-                    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <div class="mt-10 flex flex-col gap-4 sm:flex-row">
                         <a href="{{ route('our-products') }}" class="cpx-btn-primary">Lihat Katalog</a>
                         <a href="{{ route('custom') }}" class="cpx-btn-secondary">Mulai Custom</a>
                     </div>
@@ -57,44 +62,44 @@
             </div> --}}
         </section>
 
-        <section id="about" class="cpx-section overflow-hidden">
+        <section id="about" class="cpx-section overflow-hidden bg-gray-950">
             <div class="cpx-container">
                 <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
                     <div>
                         <div class="w-full">
-                            <img src="{{ asset('images/about3.jpg') }}" alt="" class="cpx-card w-full object-cover p-3">
+                            <img src="{{ asset('images/about3.jpg') }}" alt="" class="w-full rounded-lg object-cover border-2 border-white/10 shadow-2xl">
                         </div>
                     </div>
                     <div class="flex flex-col justify-center gap-8">
                         <div class="w-full mb-5 md:mb-0">
                             <span class="cpx-eyebrow">About CPX</span>
-                            <h1 class="cpx-heading mt-4 text-6xl md:text-7xl"><span class="italic">CP<span class="text-red-600">X</span></span> INDONESIA</h1>
+                            <h1 class="cpx-heading mt-4 text-6xl md:text-7xl text-white"><span class="italic">CP<span class="text-red-500">X</span></span> INDONESIA</h1>
                         </div>
-                        <div class="flex flex-col gap-5 text-gray-700">
+                        <div class="flex flex-col gap-5 text-white/75">
                             <p>Kami bukan sekadar jual jersey — kami hadir buat kamu yang punya semangat sportivitas dan gaya. Di CPX, setiap jahitan jersey kami dirancang buat kasih performa dan kenyamanan maksimal. Dari jersey bola, futsal, basket, sampai e-sport, semua bisa custom sesuai keinginan kamu.</p>
 
                             <p>Dengan pengalaman bertahun-tahun di industri ini, kami telah dipercaya oleh ratusan tim futsal, sepak bola, basket, hingga komunitas e-sport di seluruh Indonesia.</p>
 
                             <div>
-                                <span class="font-black text-gray-950">Misi Kami</span>
+                                <span class="font-black text-white">Misi Kami</span>
                                 <ul class="mt-3 grid gap-3">
-                                    <li class="mt-2">Memberikan kebebasan desain agar setiap tim punya ciri khas unik.</li>
-                                    <li>Menggunakan bahan premium dan nyaman dipakai.</li>
-                                    <li>Menjamin proses produksi cepat dan pengiriman tepat waktu.</li>
-                                    <li>Memberikan pelayanan yang ramah dan konsultasi desain gratis.</li>
+                                    <li class="mt-2 flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></span>Memberikan kebebasan desain agar setiap tim punya ciri khas unik.</li>
+                                    <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></span>Menggunakan bahan premium dan nyaman dipakai.</li>
+                                    <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></span>Menjamin proses produksi cepat dan pengiriman tepat waktu.</li>
+                                    <li class="flex items-start gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500 mt-2 shrink-0"></span>Memberikan pelayanan yang ramah dan konsultasi desain gratis.</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="w-full">
                             <div class="w-full flex gap-3">
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about2.jpg') }}" alt="" class="rounded-3xl shadow-lg">
+                                    <img src="{{ asset('images/about2.jpg') }}" alt="" class="rounded-lg shadow-lg border border-white/10">
                                 </div>
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about1.jpg') }}" alt="" class="rounded-3xl shadow-lg">
+                                    <img src="{{ asset('images/about1.jpg') }}" alt="" class="rounded-lg shadow-lg border border-white/10">
                                 </div>
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about4.jpg') }}" alt="" class="rounded-3xl shadow-lg">
+                                    <img src="{{ asset('images/about4.jpg') }}" alt="" class="rounded-lg shadow-lg border border-white/10">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +108,7 @@
             </div>
         </section>
 
-        <section id="slider2" class="relative overflow-hidden  mt-[52px] sm:mt-0">
+        <section id="slider2" class="relative overflow-hidden mt-[52px] sm:mt-0">
             <div class="slider2">
                 <div class="slide relative bg-black text-white md:bg-right w-full xl:h-screen flex items-center">
                     <img src="{{ asset('images/slider1.png') }}" alt="" >
@@ -119,10 +124,10 @@
                 </div>
             </div>
             <div class="absolute inset-x-0 top-5 flex justify-between items-center px-3 md:px-6">
-                <button id="prev" class="text-slate-100 text-sm md:text-2xl p-2 rounded shadow-md bg-zinc-900 hover:bg-gray-200 hover:text-black duration-300">
+                <button id="prev" class="text-white text-sm md:text-2xl p-3 bg-gray-950/80 hover:bg-red-600 hover:text-white transition duration-300 border border-white/10">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-                <button id="next" class="text-slate-100 text-sm md:text-2xl p-2 rounded shadow-md bg-zinc-900 hover:bg-gray-200 hover:text-black duration-300">
+                <button id="next" class="text-white text-sm md:text-2xl p-3 bg-gray-950/80 hover:bg-red-600 hover:text-white transition duration-300 border border-white/10">
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
@@ -177,7 +182,7 @@
                     <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                         <div>
                             <span class="cpx-eyebrow">Katalog CPX</span>
-                            <h1 class="cpx-heading mt-4 text-5xl md:text-7xl">Our Products Design</h1>
+                            <h1 class="cpx-heading mt-4 text-5xl md:text-7xl text-white">Our Products Design</h1>
                         </div>
                         <a href="{{ route('our-products') }}" class="cpx-btn-secondary">Lihat Semua</a>
                     </div>
@@ -187,8 +192,8 @@
                         <template x-for="type in ['all','best','new','custom']" :key="type">
                             <button
                                 @click="filter = type"
-                                :class="filter === type ? 'bg-gray-950 text-white border-gray-950' : 'border-black/10 bg-white text-gray-700'"
-                                class="rounded-full border px-4 py-2 text-xs font-black capitalize shadow-sm transition hover:border-red-400 hover:text-red-600 md:text-sm">
+                                :class="filter === type ? 'bg-red-600 text-white border-red-600' : 'border-white/20 bg-white/5 text-white/80'"
+                                class="rounded-lg border px-5 py-2.5 text-xs font-black capitalize shadow-sm transition hover:border-red-500 hover:text-white md:text-sm">
                                 <span x-text="type === 'best' ? 'Best Seller' : (type === 'custom' ? 'Custom Design' : (type === 'new' ? 'New' : 'All'))"></span>
                             </button>
                         </template>
@@ -201,9 +206,9 @@
                                 <div class="cpx-product-card p-3 cursor-pointer" x-transition>
                                     <div class="flex flex-col items-start relative">
                                         <a :href="product.url" class="w-full">
-                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[200px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px]">
+                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[200px] w-full rounded-lg object-cover sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px]">
                                         </a>
-                                        <a :href="product.url" class="cpx-heading w-30 truncate text-3xl hover:text-red-600 md:w-64 xl:text-4xl 2xl:w-80" x-text="product.name"></a>
+                                        <a :href="product.url" class="cpx-heading w-30 truncate text-3xl text-gray-900 hover:text-red-600 md:w-64 xl:text-4xl 2xl:w-80" x-text="product.name"></a>
                                         
                                         {{-- Bagian Harga dengan Diskon (Update di sini) --}}
                                         <div class="w-full flex flex-col items-start md:gap-2  justify-between items-center mt-2">
@@ -250,7 +255,7 @@
                                             @foreach($productCardNumbers as $wa)
                                                 <a 
                                                     :href="`{{ $wa->whatsapp_url }}Halo%20kak,%20saya%20mau%20beli%20${encodeURIComponent(product.name)}%20dengan%20harga%20Rp${product.has_discount ? product.discounted_price : product.original_price}`"
-                                                    class="mt-3 w-full rounded-full border border-black/10 bg-gray-950 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-red-600 xl:text-base"
+                                                    class="mt-3 w-full rounded-lg border border-gray-200 bg-gray-950 px-3 py-2.5 text-center text-xs font-bold text-white transition hover:bg-red-600 hover:border-red-600 xl:text-base"
                                                     target="_blank"
                                                 >
                                                     Beli Sekarang 1
@@ -259,7 +264,7 @@
 
                                         </div>
                                         
-                                        <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-gray-200 mb-1 py-1 px-2 rounded bg-red-600/70 backdrop-blur-xs" x-text="product.category"></h3>
+                                        <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-white mb-1 py-1 px-2 rounded-lg bg-red-600/80 backdrop-blur-xs font-bold" x-text="product.category"></h3>
 
                                         {{-- Form Cart (Improved UI/UX: Modern Circle dengan Hover Merah) --}}
                                         <form :action="product.cartUrl" method="POST"
@@ -295,8 +300,8 @@
                     </div>
 
                     <div class="w-full">
-                        <button class="py-2 px-4 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300"><a href="/our-products">Lihat Produk Lainnya 
-                        <i class="fa-solid fa-arrow-right"></i></a></button>
+                        <a href="/our-products" class="cpx-btn-secondary inline-flex items-center gap-2">Lihat Produk Lainnya 
+                        <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>

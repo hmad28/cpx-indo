@@ -17,10 +17,12 @@
 
         <section class="pt-32 pb-8 antialiased lg:pb-16 lg:pt-40">
             <div class="cpx-container max-w-7xl 2xl:max-w-[1500px]">
-                <div class="mb-8 rounded-[2rem] bg-gray-950 p-7 text-white shadow-2xl md:p-10">
-                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Checkout</span>
-                    <h2 class="cpx-heading mt-4 text-6xl md:text-8xl">Shopping Cart</h2>
-                    <p class="mt-4 max-w-2xl text-white/65">Review pesanan jersey kamu sebelum lanjut checkout ke WhatsApp admin.</p>
+                <div class="mb-8 relative overflow-hidden rounded-lg bg-gray-950 p-7 text-white shadow-2xl md:p-10 border border-white/5">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-600/20 -rotate-12 translate-x-10 -translate-y-10"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-1 bg-gradient-to-r from-red-600 to-transparent"></div>
+                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white relative z-10">Checkout</span>
+                    <h2 class="cpx-heading mt-4 text-7xl md:text-9xl relative z-10">Shopping Cart</h2>
+                    <p class="mt-4 max-w-2xl text-white/65 relative z-10">Review pesanan jersey kamu sebelum lanjut checkout ke WhatsApp admin.</p>
                 </div>
 
                 <div class="mt-6 flex flex-col lg:flex-row gap-6 lg:gap-4 2xl:gap-8 justify-center">
@@ -28,23 +30,23 @@
                     <div class="lg:max-w-[800px] 2xl:max-w-[1200px] w-full">
                         <div class="space-y-4">
                             @forelse ($cart as $id => $item)
-                                <div class="cpx-card p-4 transition hover:-translate-y-1 lg:p-6">
+                                <div class="rounded-lg border border-white/10 bg-gray-950 p-4 transition hover:-translate-y-1 hover:border-red-500/40 lg:p-6 shadow-xl">
                                     <div class="flex flex-col md:flex-row md:items-start md:justify-between md:gap-6 space-y-4 md:space-y-0">
                                         
                                         <div class="flex gap-4 items-start md:items-center flex-1 min-w-0">
                                             <a href="{{ route('product-page', $item['slug']) }}" class="shrink-0">
-                                                <img class="h-24 w-24 object-cover rounded-lg border border-gray-200 hover:border-red-600 transition-colors duration-200" 
+                                                <img class="h-24 w-24 object-cover rounded-lg border border-white/10 hover:border-red-600 transition-colors duration-200" 
                                                     src="{{ asset('images/' . $item['image']) }}" 
                                                     alt="{{ $item['name'] }}" />
                                             </a>
                                             <div class="flex-1 min-w-0 space-y-2">
-                                                <a href="{{ route('product-page', $item['slug']) }}" class="block text-lg font-bold text-black hover:text-red-600 transition-colors duration-200 font-heading truncate">{{ $item['name'] }}</a>
-                                                <p class="text-sm text-gray-600">Size: {{ $item['size'] ?? '-' }}</p>
+                                                <a href="{{ route('product-page', $item['slug']) }}" class="block text-lg font-bold text-white hover:text-red-500 transition-colors duration-200 font-heading truncate">{{ $item['name'] }}</a>
+                                                <p class="text-sm text-white/50">Size: {{ $item['size'] ?? '-' }}</p>
                                                 <div class="flex items-center gap-2">
                                                     <form action="{{ route('cart.remove', $id) }}" method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="flex items-center text-sm font-medium text-red-600 hover:text-red-700 hover:underline transition-colors duration-200" aria-label="Remove item">
+                                                        <button type="submit" class="flex items-center text-sm font-medium text-red-500 hover:text-red-400 hover:underline transition-colors duration-200" aria-label="Remove item">
                                                             <i class="fas fa-trash mr-1 text-sm"></i>
                                                             Remove
                                                         </button>
@@ -54,32 +56,29 @@
                                         </div>
 
                                         <div class="flex items-center justify-between md:justify-end gap-4 md:gap-6 flex-shrink-0">
-                                            <div class="flex items-center border border-gray-200 rounded-md overflow-hidden">
-                                                <button type="button" data-input-counter-decrement="qty-{{ $id }}" class="px-3 py-2 bg-white hover:bg-gray-50 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-200" aria-label="Decrease quantity">
-                                                    <i class="fas fa-minus text-gray-600 text-sm"></i>
+                                            <div class="flex items-center border border-white/20 rounded-lg overflow-hidden">
+                                                <button type="button" data-input-counter-decrement="qty-{{ $id }}" class="px-3 py-2 bg-gray-900 hover:bg-gray-800 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-200" aria-label="Decrease quantity">
+                                                    <i class="fas fa-minus text-white/60 text-sm"></i>
                                                 </button>
                                                 <input type="text" id="qty-{{ $id }}" data-input-counter 
-                                                    class="w-12 text-center border-0 bg-transparent text-sm font-bold text-black focus:outline-none" 
+                                                    class="w-12 text-center border-0 bg-transparent text-sm font-bold text-white focus:outline-none" 
                                                     value="{{ $item['qty'] }}" readonly />
-                                                <button type="button" data-input-counter-increment="qty-{{ $id }}" class="px-3 py-2 bg-white hover:bg-gray-50 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-200" aria-label="Increase quantity">
-                                                    <i class="fas fa-plus text-gray-600 text-sm"></i>
+                                                <button type="button" data-input-counter-increment="qty-{{ $id }}" class="px-3 py-2 bg-gray-900 hover:bg-gray-800 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all duration-200" aria-label="Increase quantity">
+                                                    <i class="fas fa-plus text-white/60 text-sm"></i>
                                                 </button>
                                             </div>
                                             
                                             {{-- Update: Tampilan Harga dengan Diskon (Responsive Hierarchy) --}}
                                             <div class="text-right min-w-[120px] space-y-1">
                                                 @if(isset($item['has_discount']) && $item['has_discount'])
-                                                    {{-- Harga Asli (Strikethrough, Abu-abu Kecil) --}}
-                                                    <p class="text-sm text-gray-400 line-through font-normal">
+                                                    <p class="text-sm text-white/40 line-through font-normal">
                                                         Rp {{ number_format($item['original_price'], 0, ',', '.') }}
                                                     </p>
-                                                    {{-- Harga Diskon (Merah Bold Besar) --}}
-                                                    <p class="text-lg font-bold text-red-600">
+                                                    <p class="text-lg font-bold text-red-500">
                                                         Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                     </p>
-                                                    {{-- Badge Diskon (Kecil, Merah Muda, Hover Shadow) --}}
                                                     <div class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-semibold 
-                                                                bg-red-50 border border-red-200 text-red-700 shadow-sm hover:shadow-md
+                                                                bg-red-950/50 border border-red-500/30 text-red-400 shadow-sm hover:shadow-md
                                                                 transition-all duration-200">
                                                         <svg class="w-3 h-3 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                             <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H5zm0 1h10v12H5V3zm2 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -87,8 +86,7 @@
                                                         {{ $item['discount_percentage'] }}% OFF
                                                     </div>
                                                 @else
-                                                    {{-- Harga Normal (Merah Bold) --}}
-                                                    <p class="text-lg font-bold text-red-600">
+                                                    <p class="text-lg font-bold text-red-500">
                                                         Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                     </p>
                                                 @endif
@@ -97,10 +95,10 @@
                                     </div>
                                 </div>
                             @empty
-                                <div class="cpx-card text-center py-12">
-                                    <i class="fas fa-shopping-cart text-4xl text-gray-400 mb-4"></i>
-                                    <p class="text-lg text-gray-600 font-medium">Keranjang kamu kosong.</p>
-                                    <a href="/#products" class="mt-4 inline-block text-red-600 hover:text-red-700 hover:underline text-sm">Mulai Belanja</a>
+                                <div class="rounded-lg border border-white/10 bg-gray-950 text-center py-12 shadow-xl">
+                                    <i class="fas fa-shopping-cart text-4xl text-white/30 mb-4"></i>
+                                    <p class="text-lg text-white/60 font-medium">Keranjang kamu kosong.</p>
+                                    <a href="/#products" class="mt-4 inline-block text-red-500 hover:text-red-400 hover:underline text-sm">Mulai Belanja</a>
                                 </div>
                             @endforelse
                         </div>
@@ -178,7 +176,7 @@
                             <div class="container mx-auto">
                                 <div class="w-full">
                                     <div class="w-full mb-2">
-                                        <h1 class="cpx-heading text-5xl">Produk lainnya</h1>
+                                        <h1 class="cpx-heading text-5xl text-white">Produk lainnya</h1>
                                     </div>
 
                                     <!-- product grid -->
@@ -189,10 +187,10 @@
                                                     <div class="flex flex-col items-start relative">
 
                                                         <a :href="product.url" class="w-full">
-                                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[160px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[230px] 2xl:h-[348px]">
+                                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[160px] w-full rounded-lg object-cover sm:h-[280px] md:h-[230px] 2xl:h-[348px]">
                                                         </a>
                                                         
-                                                        <a :href="product.url" class="text-xl md:text-2xl xl:text-4xl hover:underline w-30 md:w-56 2xl:w-80 truncate font-heading" x-text="product.name"></a>
+                                                        <a :href="product.url" class="cpx-heading text-xl md:text-2xl xl:text-4xl text-gray-900 hover:text-red-600 w-30 md:w-56 2xl:w-80 truncate" x-text="product.name"></a>
                                                         
                                                         <div class="w-full flex flex-col items-start md:gap-2 justify-between items-center md:mt-2">
                                                             {{-- Jika ada diskon --}}
@@ -205,13 +203,10 @@
                                                                 x-transition:leave-start="opacity-100 scale-100"
                                                                 x-transition:leave-end="opacity-0 scale-95">
                                                                 
-                                                                {{-- Harga Asli (Strikethrough, abu-abu kecil) --}}
                                                                 <div class="flex flex-col items-start space-y-0.5 w-full md:w-auto">
-                                                                    {{-- Harga Asli (Strikethrough: Kecil, Abu-abu, Subtle) --}}
                                                                     <span class="text-xs md:text-sm text-gray-400 line-through font-normal tracking-wide">
                                                                         Rp <span x-text="product.price"></span>
                                                                     </span>
-                                                                    {{-- Harga Diskon (Prominent: Besar, Merah Bold, Emphasis) --}}
                                                                     <span class="text-base md:text-lg lg:text-xl font-bold text-red-600 tracking-tight">
                                                                         Rp <span x-text="product.discounted_price_formatted"></span>
                                                                     </span>
@@ -237,7 +232,7 @@
                                                             @foreach($productCardNumbers as $wa)
                                                                 <a 
                                                                     :href="`{{ $wa->whatsapp_url }}Halo%20kak,%20saya%20mau%20beli%20${encodeURIComponent(product.name)}%20dengan%20harga%20Rp${product.has_discount ? product.discounted_price : product.original_price}`"
-                                                                    class="w-full text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300" 
+                                                                    class="mt-3 w-full rounded-lg border border-gray-200 bg-gray-950 px-3 py-2.5 text-center text-xs font-bold text-white transition hover:bg-red-600 hover:border-red-600 xl:text-base" 
                                                                     target="_blank"
                                                                 >
                                                                     Beli Sekarang 1
@@ -246,7 +241,7 @@
 
                                                         </div>
                                                         
-                                                        <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-gray-200 mb-1 py-1 px-2 rounded bg-red-600/70 backdrop-blur-xs" x-text="product.category"></h3>
+                                                        <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-white mb-1 py-1 px-2 rounded-lg bg-red-600/80 backdrop-blur-xs font-bold" x-text="product.category"></h3>
 
                                                         {{-- Form Cart (Improved UI/UX: Modern Circle dengan Hover Merah) --}}
                                                         <form :action="product.cartUrl" method="POST"
@@ -285,16 +280,16 @@
 
                     <!-- Order Summary -->
                     <div class="lg:max-w-[400px] w-full lg:sticky lg:top-6 h-fit space-y-6">
-                        <div class="rounded-lg border border-gray-200 bg-white p-4 sm:p-6 shadow-md">
-                            <h3 class="text-xl font-bold text-black mb-4">Ringkasan Pesanan</h3>
+                        <div class="rounded-lg border border-white/10 bg-gray-950 p-4 sm:p-6 shadow-xl">
+                            <h3 class="text-xl font-bold text-white mb-4">Ringkasan Pesanan</h3>
                             @php
                                 $total = collect($cart)->sum(fn($item) => $item['qty'] * $item['price']); // Pakai discounted price
                             @endphp
                             
                             <!-- Table View (Desktop) - Updated dengan Diskon -->
                             <div class="hidden lg:block">
-                                <table class="w-full text-sm text-gray-700">
-                                    <thead class="bg-gray-50 text-xs uppercase text-gray-900 border-b border-gray-200">
+                                <table class="w-full text-sm text-white/70">
+                                    <thead class="bg-gray-900 text-xs uppercase text-white/80 border-b border-white/10">
                                         <tr>
                                             <th class="py-3 px-3 text-left font-medium w-1/2">Produk</th>
                                             <th class="py-3 px-3 text-center font-medium w-1/6">Size</th>
@@ -303,14 +298,13 @@
                                             <th class="py-3 px-3 text-right font-medium w-1/6">Subtotal</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200">
+                                    <tbody class="divide-y divide-white/5">
                                         @foreach ($cart as $id => $item)
-                                            <tr class="hover:bg-gray-50 transition-colors duration-150">
-                                                <td class="py-3 px-3 font-medium text-black font-heading relative group max-w-[180px] md:max-w-[220px]">
+                                            <tr class="hover:bg-white/5 transition-colors duration-150">
+                                                <td class="py-3 px-3 font-medium text-white font-heading relative group max-w-[180px] md:max-w-[220px]">
                                                     <span class="block break-words line-clamp-2" title="{{ $item['name'] }}">
                                                         {{ Str::limit($item['name'], 35, '...') }}
                                                     </span>
-                                                    {{-- Tooltip (Tetap sama) --}}
                                                     <div class="absolute z-50 hidden group-hover:block bg-black text-white text-sm px-3 py-1.5 rounded-md shadow-lg font-medium leading-tight max-w-md min-w-[150px] top-0 left-full ml-2 border border-red-600 overflow-hidden">
                                                         <div class="line-clamp-2">
                                                             {{ $item['name'] }}
@@ -318,32 +312,31 @@
                                                         <div class="absolute -left-2 top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-4 border-r-4 border-b-4 border-transparent border-r-black"></div>
                                                     </div>
                                                 </td>
-                                                <td class="py-3 px-3 text-center text-gray-600">{{ $item['size'] ?? '-' }}</td>
-                                                <td class="py-3 px-3 text-center" id="qty-text-{{ $id }}">{{ $item['qty'] }}</td>
+                                                <td class="py-3 px-3 text-center text-white/50">{{ $item['size'] ?? '-' }}</td>
+                                                <td class="py-3 px-3 text-center text-white" id="qty-text-{{ $id }}">{{ $item['qty'] }}</td>
                                                 
-                                                {{-- Update: Kolom Harga dengan Diskon (Compact untuk Table) --}}
                                                 <td class="py-3 px-3 text-right space-y-0.5">
                                                     @if(isset($item['has_discount']) && $item['has_discount'])
-                                                        <span class="text-xs text-gray-400 line-through block">
+                                                        <span class="text-xs text-white/40 line-through block">
                                                             Rp {{ number_format($item['original_price'], 0, ',', '.') }}
                                                         </span>
-                                                        <span class="text-sm font-bold text-red-600 block">
+                                                        <span class="text-sm font-bold text-red-500 block">
                                                             Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                         </span>
                                                         <div class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-semibold 
-                                                                    bg-red-50 border border-red-200 text-red-700 shadow-sm">
+                                                                    bg-red-950/50 border border-red-500/30 text-red-400 shadow-sm">
                                                             <svg class="w-3 h-3 mr-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                                 <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H5zm0 1h10v12H5V3zm2 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                                             </svg>
                                                             {{ $item['discount_percentage'] }}% OFF
                                                         </div>
                                                     @else
-                                                        <span class="text-sm font-bold text-red-600">
+                                                        <span class="text-sm font-bold text-red-500">
                                                             Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                         </span>
                                                     @endif
                                                 </td>
-                                                <td class="py-3 px-3 text-right font-bold text-red-600" id="subtotal-{{ $id }}">
+                                                <td class="py-3 px-3 text-right font-bold text-red-500" id="subtotal-{{ $id }}">
                                                     Rp {{ number_format($item['qty'] * $item['price'], 0, ',', '.') }}
                                                 </td>
                                             </tr>
@@ -355,38 +348,37 @@
                             <!-- List View (Mobile) - Updated dengan Diskon -->
                             <div class="lg:hidden space-y-4">
                                 @foreach ($cart as $id => $item)
-                                    <div class="border border-gray-200 rounded-lg p-3 bg-gray-50 hover:bg-white transition-colors duration-150">
-                                        <p class="font-bold text-black text-base font-heading truncate">{{ $item['name'] }}</p>
-                                        <p class="text-sm text-gray-600 mt-1">Size: {{ $item['size'] ?? '-' }}</p>
-                                        <div class="flex justify-between items-center text-sm mt-2 text-gray-700 py-1">
+                                    <div class="border border-white/10 rounded-lg p-3 bg-gray-900 hover:bg-gray-800 transition-colors duration-150">
+                                        <p class="font-bold text-white text-base font-heading truncate">{{ $item['name'] }}</p>
+                                        <p class="text-sm text-white/50 mt-1">Size: {{ $item['size'] ?? '-' }}</p>
+                                        <div class="flex justify-between items-center text-sm mt-2 text-white/70 py-1">
                                             <span class="font-medium">Qty:</span>
-                                            <span class="font-bold text-black" id="qty-text-{{ $id }}">{{ $item['qty'] }}</span>
+                                            <span class="font-bold text-white" id="qty-text-{{ $id }}">{{ $item['qty'] }}</span>
                                         </div>
                                         
-                                        {{-- Update: Harga dengan Diskon (Stacked Mobile) --}}
                                         <div class="space-y-1 mt-2">
                                             @if(isset($item['has_discount']) && $item['has_discount'])
-                                                <div class="text-sm text-gray-400 line-through">
+                                                <div class="text-sm text-white/40 line-through">
                                                     Harga asli: Rp {{ number_format($item['original_price'], 0, ',', '.') }}
                                                 </div>
-                                                <div class="text-base font-bold text-red-600">
+                                                <div class="text-base font-bold text-red-500">
                                                     Harga diskon: Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                 </div>
                                                 <div class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold 
-                                                            bg-red-50 border border-red-200 text-red-700 shadow-sm">
+                                                            bg-red-950/50 border border-red-500/30 text-red-400 shadow-sm">
                                                     <svg class="w-3 h-3 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H5zm0 1h10v12H5V3zm2 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                                     </svg>
                                                     {{ $item['discount_percentage'] }}% OFF
                                                 </div>
                                             @else
-                                                <div class="text-base font-bold text-red-600">
+                                                <div class="text-base font-bold text-red-500">
                                                     Harga: Rp {{ number_format($item['price'], 0, ',', '.') }}
                                                 </div>
                                             @endif
                                         </div>
                                         
-                                        <div class="flex justify-between items-center text-sm font-bold text-red-600 py-1 border-t border-gray-200 mt-2 pt-2">
+                                        <div class="flex justify-between items-center text-sm font-bold text-red-500 py-1 border-t border-white/10 mt-2 pt-2">
                                             <span>Subtotal:</span>
                                             <span id="subtotal-{{ $id }}">
                                                 Rp {{ number_format($item['qty'] * $item['price'], 0, ',', '.') }}
@@ -396,10 +388,10 @@
                                 @endforeach
                             </div>
 
-                            <div class="pt-4 border-t border-gray-200 mt-4">
+                            <div class="pt-4 border-t border-white/10 mt-4">
                                 <dl class="flex justify-between items-center text-sm font-bold text-lg">
-                                    <dt class="text-black">Total</dt>
-                                    <dd class="text-red-600 font-bold" id="total-cart">
+                                    <dt class="text-white">Total</dt>
+                                    <dd class="text-red-500 font-bold text-xl" id="total-cart">
                                         Rp {{ number_format($total, 0, ',', '.') }}
                                     </dd>
                                 </dl>
@@ -414,7 +406,7 @@
                                 </a>
                             @endif
                             <div class="text-center pt-2">
-                                <a href="/#products" class="text-red-600 hover:text-red-700 hover:underline text-sm font-medium transition-colors duration-200">Belanja Lagi</a>
+                                <a href="/#products" class="text-red-500 hover:text-red-400 hover:underline text-sm font-medium transition-colors duration-200">Belanja Lagi</a>
                             </div>
                         </div>
                     </div>
