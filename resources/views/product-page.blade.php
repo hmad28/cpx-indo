@@ -23,7 +23,7 @@
         <x-header></x-header>
 
         <section class="pt-32 pb-8 lg:pt-40 md:pb-15">
-            <div class="cpx-container cpx-card p-4 md:flex md:gap-5 lg:p-6"> {{-- Background utama --}}
+            <div class="cpx-container rounded-lg border border-white/10 bg-white p-4 shadow-2xl md:flex md:gap-5 lg:p-6">
     
                 <!-- Product info (Layout utama: Gallery + Deskripsi) -->
                 <div class="lg:flex md:pb-16 md:max-w-xl lg:max-w-3xl 2xl:max-w-5xl gap-3 lg:gap-x-8 lg:py-0 w-full">
@@ -31,12 +31,11 @@
                     <!-- Image Gallery dari product_images (Fokus Perubahan Ini) -->
                     <div class="md:w-[305px] lg:w-[320px] 2xl:w-[500px] mb-6 lg:mb-0 flex flex-col">
                         <!-- Main Image (selalu dari product->image, fallback jika kosong) -->
-                        <div id="mainImageContainer" data-modal-target="readImage-{{ $product->id }}" data-modal-toggle="readImage-{{ $product->id }}" class="relative overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
+                        <div id="mainImageContainer" data-modal-target="readImage-{{ $product->id }}" data-modal-toggle="readImage-{{ $product->id }}" class="relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
                             <img id="mainImage" 
                                 src="{{ asset('images/' . $product->image) }}"  {{-- Selalu dari field image di tabel products --}}
                                 alt="{{ $product->name }} - Gambar Utama" 
                                 class="w-full lg:h-[310px] 2xl:h-[500px] object-cover transition-transform duration-300 hover:scale-105 hover:cursor-pointer" />
-                            {{-- Jika ada multiple images (termasuk product->image + tambahan), tambah indicator --}}
                             @if(isset($images) && $images->count() > 0)
                                 <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">{{ 1 + $images->count() }} Gambar</div>
                             @endif
@@ -68,25 +67,21 @@
                                                 src="{{ asset('images/' . $product->image) }}"  {{-- Selalu dari field image di tabel products --}}
                                                 alt="{{ $product->name }} - Gambar Utama" 
                                                 class="w-full lg:h-[510px] 2xl:h-[800px] object-cover transition-transform duration-300 hover:scale-105 hover:cursor-pointer" />
-                                            {{-- Jika ada multiple images (termasuk product->image + tambahan), tambah indicator --}}
                                             @if(isset($images) && $images->count() > 0)
                                                 <div class="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">{{ 1 + $images->count() }} Gambar</div>
                                             @endif
                                         </div>
 
                                         <!-- Thumbnails Gallery (product->image sebagai pertama, + path dari product_images, scrollable horizontal) -->
-                                        <div class="flex flex-row md:flex-col gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide"> {{-- Selalu tampilkan thumbnails jika ada minimal 1 --}}
-                                            {{-- Thumbnail pertama: selalu dari product->image --}}
+                                        <div class="flex flex-row md:flex-col gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
                                             <div class="relative flex-shrink-0">
                                                 <img src="{{ asset('images/' . $product->image) }}"  
                                                     alt="{{ $product->name }} - Thumbnail Utama" 
                                                     class="modalImage w-16 h-16 object-cover rounded border-2 border-red-600 cursor-pointer transition-all duration-200 hover:shadow-md flex-shrink-0 active-thumbnail" 
                                                     onclick="changeMainModalImage('{{ asset('images/' . $product->image) }}')" />
-                                                {{-- Active indicator untuk thumbnail pertama --}}
                                                 <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-red-600 rounded-full border-2 border-white"></div>
                                             </div>
                                             
-                                            {{-- Thumbnails tambahan: dari product_images (jika ada) --}}
                                             @if(isset($images) && $images->isNotEmpty())
                                                 @foreach($images as $image)
                                                     <div class="relative flex-shrink-0">
@@ -94,12 +89,10 @@
                                                             alt="{{ $product->name }} - Thumbnail {{ $loop->iteration }}" 
                                                             class="modalImage w-16 h-16 object-cover rounded border-2 border-gray-200 hover:border-red-600 cursor-pointer transition-all duration-200 hover:shadow-md flex-shrink-0" 
                                                             onclick="changeMainModalImage('{{ asset('images/' . $image->path) }}')" />
-                                                        {{-- Active indicator hanya untuk yang pertama (product->image), sisanya tidak --}}
                                                     </div>
                                                 @endforeach
                                             @endif
                                             
-                                            {{-- Jika tidak ada tambahan, tampilkan pesan (tapi thumbnails tetap ada yang pertama) --}}
                                             @if(!isset($images) || $images->isEmpty())
                                                 <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded border-2 border-dashed border-gray-300 flex items-center justify-center text-xs text-gray-500">
                                                     Tambahan
@@ -113,18 +106,15 @@
                         </div>
 
                         <!-- Thumbnails Gallery (product->image sebagai pertama, + path dari product_images, scrollable horizontal) -->
-                        <div class="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide"> {{-- Selalu tampilkan thumbnails jika ada minimal 1 --}}
-                            {{-- Thumbnail pertama: selalu dari product->image --}}
+                        <div class="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
                             <div class="relative flex-shrink-0">
                                 <img src="{{ asset('images/' . $product->image) }}"  
                                     alt="{{ $product->name }} - Thumbnail Utama" 
                                     class="w-16 h-16 object-cover rounded border-2 border-red-600 cursor-pointer transition-all duration-200 hover:shadow-md flex-shrink-0 active-thumbnail" 
                                     onclick="changeMainImage('{{ asset('images/' . $product->image) }}')" />
-                                {{-- Active indicator untuk thumbnail pertama --}}
                                 <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-red-600 rounded-full border-2 border-white"></div>
                             </div>
                             
-                            {{-- Thumbnails tambahan: dari product_images (jika ada) --}}
                             @if(isset($images) && $images->isNotEmpty())
                                 @foreach($images as $image)
                                     <div class="relative flex-shrink-0">
@@ -132,12 +122,10 @@
                                             alt="{{ $product->name }} - Thumbnail {{ $loop->iteration }}" 
                                             class="w-16 h-16 object-cover rounded border-2 border-gray-200 hover:border-red-600 cursor-pointer transition-all duration-200 hover:shadow-md flex-shrink-0" 
                                             onclick="changeMainImage('{{ asset('images/' . $image->path) }}')" />
-                                        {{-- Active indicator hanya untuk yang pertama (product->image), sisanya tidak --}}
                                     </div>
                                 @endforeach
                             @endif
                             
-                            {{-- Jika tidak ada tambahan, tampilkan pesan (tapi thumbnails tetap ada yang pertama) --}}
                             @if(!isset($images) || $images->isEmpty())
                                 <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded border-2 border-dashed border-gray-300 flex items-center justify-center text-xs text-gray-500">
                                     Tambahan
@@ -151,17 +139,17 @@
                         </style>
                     </div>
 
-                    <!-- Deskripsi Produk (Diperbaiki warna: Hitam untuk teks utama) -->
-                    <div class="w-full md:w-[300px] lg:w-[400px] 2xl:w-[600px] pr-4 lg:border-r lg:border-black/10">
+                    <!-- Deskripsi Produk -->
+                    <div class="w-full md:w-[300px] lg:w-[400px] 2xl:w-[600px] pr-4 lg:border-r lg:border-gray-200">
                         <div class="w-full flex flex-col items-start">
-                            <h1 class="cpx-heading text-5xl tracking-tight text-black sm:text-6xl md:text-7xl">{{ $product->name }}</h1>
-                            <p class="mt-3 rounded-full bg-red-600 px-3 py-1 text-xs font-black text-white xl:text-sm">{{ $product->category->name }}</p>
+                            <h1 class="cpx-heading text-5xl tracking-tight text-gray-900 sm:text-6xl md:text-7xl">{{ $product->name }}</h1>
+                            <p class="mt-3 rounded-lg bg-red-600 px-3 py-1 text-xs font-black text-white xl:text-sm">{{ $product->category->name }}</p>
                         </div>
 
                         <div class="w-full py-4 lg:pt-3 lg:pr-8 lg:pb-5">
                             <!-- Kelebihan -->
                             <div class="mt-5 md:mt-3 lg:mt-10">
-                                <h3 class="text-sm font-medium text-black mb-2">Kelebihan</h3>
+                                <h3 class="text-sm font-medium text-gray-900 mb-2">Kelebihan</h3>
                                 <ul role="list" class="list-disc space-y-2 pl-5 text-sm text-gray-700">
                                     @foreach (json_decode($product->kelebihan ?? '[]') as $item)
                                         <li class="flex items-start">
@@ -176,7 +164,7 @@
 
                             <!-- Detail Produk -->
                             <div class="mt-5 lg:mt-10">
-                                <h2 class="text-sm font-medium text-black mb-2">Detail Produk</h2>
+                                <h2 class="text-sm font-medium text-gray-900 mb-2">Detail Produk</h2>
                                 <div class="text-sm text-gray-700 leading-relaxed">{!! \App\Support\HtmlSanitizer::clean($product->description) !!}</div>
                             </div>
                         </div>
@@ -189,26 +177,22 @@
 
                     {{-- Tampilan Harga dengan Diskon --}}
                     @if(isset($hasDiscount) && $hasDiscount)
-                        {{-- Harga Asli (Strikethrough, Abu-abu) --}}
-                        <p class="text-2xl tracking-tight text-gray-500 line-through font-medium">
+                        <p class="text-2xl tracking-tight text-gray-400 line-through font-medium">
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
                         
-                        {{-- Harga Diskon (Besar, Merah) --}}
-                        <p class="text-3xl tracking-tight text-gray-900 font-semibold text-red-600">
+                        <p class="text-3xl tracking-tight font-bold text-red-600">
                             Rp {{ number_format($discountedPrice, 0, ',', '.') }}
                         </p>
                         
-                        {{-- Badge Diskon (Merah Muda) --}}
-                        <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <div class="mt-2 inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-red-100 text-red-800">
                             <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H5zm0 1h10v12H5V3zm2 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                             </svg>
                             Diskon {{ number_format($discountPercentage, 1) }}%
                         </div>
                     @else
-                        {{-- Harga Normal (seperti sebelumnya) --}}
-                        <p class="text-3xl tracking-tight text-gray-900 font-semibold text-red-600">
+                        <p class="text-3xl tracking-tight font-bold text-red-600">
                             Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
                     @endif
@@ -220,25 +204,24 @@
 
                     <form action="{{ route('cart.add', $product->slug) }}" method="POST" class="mt-5 md:mt-10">
                         @csrf
-                        {{-- Hidden input untuk pass harga diskon ke cart (opsional, handle di CartController) --}}
                         @if(isset($hasDiscount) && $hasDiscount)
                             <input type="hidden" name="discounted_price" value="{{ $discountedPrice }}">
                             <input type="hidden" name="discount_percentage" value="{{ $discountPercentage }}">
                         @endif
 
-                        <!-- Sizes (tetap sama seperti kode kamu) -->
+                        <!-- Sizes -->
                         <div class="mt-5 md:mt-10">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-sm font-medium text-gray-900 text-black">Ukuran</h3>
+                                <h3 class="text-sm font-medium text-gray-900">Ukuran</h3>
                             </div>
 
                             <fieldset aria-label="Choose a size" class="my-4">
                                 <div class="grid grid-cols-4 gap-3">
                                     @foreach($sizes as $size)
-                                        <label class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-1 md:p-3 
-                                                    has-checked:border-red-600 has-checked:bg-red-600 
+                                        <label class="group relative flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 md:p-3 
+                                                    has-checked:border-red-600 has-checked:bg-gray-950 
                                                     has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-red-600 
-                                                    has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25 hover:border-red-400 transition-colors">
+                                                    has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25 hover:border-red-400 transition-colors cursor-pointer">
 
                                             <input type="radio" 
                                                 name="size" 
@@ -256,7 +239,7 @@
 
                             <button type="button" data-modal-target="readProductModal-{{ $product->id }}" data-modal-toggle="readProductModal-{{ $product->id }}" class="text-xs text-red-600 hover:text-red-800 hover:underline font-medium">Panduan Ukuran</button>
 
-                            <!-- Modal Panduan Ukuran (tetap sama seperti kode kamu) -->
+                            <!-- Modal Panduan Ukuran -->
                             <div id="readProductModal-{{ $product->id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-xl max-h-full">
                                     <div class="relative p-4 bg-white rounded-lg shadow-lg border border-gray-200 sm:p-5">
@@ -284,7 +267,7 @@
                                             <ul class="list-disc pl-5 space-y-2 text-gray-700">
                                                 <li>Jika ragu, pilih ukuran lebih besar agar lebih nyaman.</li>
                                                 <li>Bandingkan dengan ukuran kaos yang biasa kamu pakai.</li>
-                                                <li>Ukuran bisa sedikit berbeda (1–2 cm) tergantung metode produksi.</li>
+                                                <li>Ukuran bisa sedikit berbeda (1-2 cm) tergantung metode produksi.</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -292,10 +275,10 @@
                             </div>
                         </div>
 
-                        {{-- Bagian Jumlah (tetap sama) --}}
+                        {{-- Bagian Jumlah --}}
                         <div class="w-full mt-4">
                             <div class="flex items-center">
-                                <button type="button" id="decrement" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 hover:border-red-600 transition-colors">
+                                <button type="button" id="decrement" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white hover:bg-gray-50 hover:border-red-600 transition-colors">
                                     <svg class="h-3 w-3 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
                                     </svg>
@@ -303,14 +286,14 @@
 
                                 <input type="text" name="qty" id="qty" value="1" readonly class="w-12 text-center border-0 bg-transparent text-sm font-medium text-gray-900 mx-2" />
 
-                                <button type="button" id="increment" class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50 hover:border-red-600 transition-colors">
+                                <button type="button" id="increment" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white hover:bg-gray-50 hover:border-red-600 transition-colors">
                                     <svg class="h-3 w-3 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
                                     </svg>
                                 </button>
                             </div>
                         </div>
-                        <button type="submit" class="mt-4 md:mt-10 flex w-full items-center justify-center rounded-md bg-red-600 px-8 py-3 text-white hover:bg-red-700 transition-colors shadow-md">
+                        <button type="submit" class="cpx-btn-primary mt-4 md:mt-10 w-full justify-center">
                             Tambah ke Keranjang
                         </button>
                     </form>
@@ -338,51 +321,11 @@
                 </div>
             </div>
             
-            <!-- Lainnya -->
-            {{-- <div class="mt-4 xl:mt-8 md:max-w-xl lg:max-w-6xl 2xl:max-w-7xl mx-auto">
-                <h3 class="text-2xl font-semibold text-gray-900 :text-white">People also bought</h3>
-                <div class="mt-6 w-full flex flex-wrap md:flex-nowrap md:gap-4 sm:mt-8">
-                    @foreach ( $products as $product )
-                        <div class="p-3 w-1/2 md:w-1/3 hover:border hover:border-black cursor-pointer shadow">
-                            <div class="flex flex-col items-start relative">
-
-                                <a href="{{ route('product-page', $product->slug) }}">
-                                    <img src="../images/{{ $product->image }}" alt="" class="w-full h-[160px] sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px] mb-2">
-                                </a>
-
-                                
-
-                                <a href="{{ route('product-page', $product->slug) }}" class="text-xl md:text-2xl xl:text-4xl hover:underline w-30 md:w-64 2xl:w-80 truncate font-heading">{{ $product->name }}</a>
-
-                                <div class="w-full flex flex-col items-start md:gap-2 lg:flex-row justify-between items-center mt-2">
-                                    <h2 class="text-sm md:text-lg font-semibold text-red-500">Rp {{ number_format($product->price, 0, ',', '.') }}</h2>
-                                        <a href="https://wa.me/6281234567890?text=Halo%20kak,%20saya%20mau%20beli%20{{ urlencode($product->name) }}%20dengan%20harga%20Rp{{ number_format($product->price, 0, ',', '.') }}" 
-                                    target="_blank"
-                                    class="w-full md:w-auto text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300">
-                                    Beli Sekarang
-                                    </a>
-                                </div>
-
-                                <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-gray-200 mb-1 py-1 px-2 rounded bg-red-600/70 backdrop-blur-xs">{{ $product->category->name }}</h3>
-
-                                <form action="{{ route('cart.add', $product->slug) }}" method="POST" class="absolute w-6 h-6 md:w-8 md:h-8 flex justify-center items-center right-0 border border-gray-500 rounded-full text-gray-500 hover:border-black hover:text-black">
-                                    @csrf
-                                    <button type="submit">
-                                        <i class="fa-solid fa-cart-plus text-xs"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div> --}}
-
             <section id="products" class="mt-4 xl:mt-10 md:max-w-xl lg:max-w-6xl 2xl:max-w-7xl mx-auto"
                 x-data="{
                     filter: 'all',
                     products: {{ $products->map(fn($p) => [
                         'id' => $p->id,
-                        'slug' => $p->slug,
                         'name' => $p->name,
                         'price' => number_format($p->price, 0, ',', '.'), // Harga asli formatted (fallback)
                         'original_price' => $p->price, // Raw number asli untuk calc
@@ -418,21 +361,21 @@
                 <div class="container mx-auto">
                     <div class="w-full">
                         <div class="w-full mb-2">
-                            <h1 class="text-4xl font-semibold">Produk lainnya</h1>
+                            <h1 class="cpx-heading text-5xl text-white">Produk lainnya</h1>
                         </div>
 
                         <!-- product grid -->
                         <div class="w-full py-4">
                             <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <template x-for="product in filteredProducts" :key="product.id">
-                                    <div class="p-3 hover:border hover:border-black cursor-pointer shadow" x-transition>
+                                    <div class="cpx-product-card p-3 cursor-pointer" x-transition>
                                         <div class="flex flex-col items-start relative">
 
                                             <a :href="product.url" class="w-full">
-                                                <img :src="'../images/' + product.image" alt="" class="w-full h-[160px] sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[310px] mb-2">
+                                                <img :src="'../images/' + product.image" alt="" class="w-full h-[160px] rounded-lg object-cover sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[310px] mb-2">
                                             </a>
                                             
-                                            <a :href="product.url" class="text-xl md:text-2xl xl:text-4xl hover:underline w-30 md:w-64 2xl:w-80 truncate font-heading" x-text="product.name"></a>
+                                            <a :href="product.url" class="cpx-heading text-xl md:text-2xl xl:text-4xl text-gray-900 hover:text-red-600 w-30 md:w-64 2xl:w-80 truncate" x-text="product.name"></a>
                                             
                                             {{-- Bagian Harga dengan Diskon (Update di sini) --}}
                                             <div class="w-full flex flex-col items-start md:gap-2  justify-between items-center md:mt-2">
@@ -479,7 +422,7 @@
                                                 @foreach($productCardNumbers as $wa)
                                                     <a 
                                                         :href="`{{ $wa->whatsapp_url }}Halo%20kak,%20saya%20mau%20beli%20${encodeURIComponent(product.name)}%20dengan%20harga%20Rp${product.has_discount ? product.discounted_price : product.original_price}`"
-                                                        class="w-full text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300" 
+                                                        class="mt-3 w-full rounded-lg border border-gray-200 bg-gray-950 px-3 py-2.5 text-center text-xs font-bold text-white transition hover:bg-red-600 hover:border-red-600 xl:text-base" 
                                                         target="_blank"
                                                     >
                                                         Beli Sekarang 1
@@ -487,7 +430,7 @@
                                                 @endforeach
                                             </div>
                                             
-                                            <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-gray-200 mb-1 py-1 px-2 rounded bg-red-600/70 backdrop-blur-xs" x-text="product.category"></h3>
+                                            <h3 class="absolute top-1 left-1 text-xs xl:text-sm text-white mb-1 py-1 px-2 rounded-lg bg-red-600/80 backdrop-blur-xs font-bold" x-text="product.category"></h3>
 
                                             {{-- Form Cart (Improved UI/UX: Modern Circle dengan Hover Merah) --}}
                                             <form :action="product.cartUrl" method="POST"
@@ -533,23 +476,19 @@
     <x-script></x-script>
     <script>
         // JS untuk Gallery: Ganti main image saat klik thumbnail
-        // Fungsi untuk ganti gambar utama (sudah ada, tapi pastikan konsisten)
         function changeMainImage(imageSrc) {
             const mainImage = document.getElementById('mainImage');
-            const thumbnails = document.querySelectorAll('.w-16');  // Semua thumbnails
+            const thumbnails = document.querySelectorAll('.w-16');
             mainImage.src = imageSrc;
             mainImage.classList.add('transition-transform', 'duration-300');
             
-            // Update active indicator: hilangkan semua, tambah ke yang diklik
             thumbnails.forEach(thumb => {
                 thumb.classList.remove('border-red-600', 'active-thumbnail');
                 thumb.classList.add('border-gray-200');
-                // Hilangkan indicator
                 const indicator = thumb.parentElement.querySelector('div.absolute');
                 if (indicator) indicator.style.display = 'none';
             });
             
-            // Tambah active ke thumbnail yang diklik
             event.target.classList.remove('border-gray-200');
             event.target.classList.add('border-red-600', 'active-thumbnail');
             const newIndicator = event.target.parentElement.querySelector('div.absolute') || 
@@ -559,27 +498,23 @@
             }
             newIndicator.style.display = 'block';
             
-            // Efek zoom ringan
             mainImage.style.transform = 'scale(1.02)';
             setTimeout(() => { mainImage.style.transform = 'scale(1)'; }, 300);
         }
 
         function changeMainModalImage(imageSrc) {
             const mainImage = document.getElementById('mainImageModal');
-            const thumbnails = document.querySelectorAll('.modalImage');  // Semua thumbnails
+            const thumbnails = document.querySelectorAll('.modalImage');
             mainImage.src = imageSrc;
             mainImage.classList.add('transition-transform', 'duration-300');
             
-            // Update active indicator: hilangkan semua, tambah ke yang diklik
             thumbnails.forEach(thumb => {
                 thumb.classList.remove('border-red-600', 'active-thumbnail');
                 thumb.classList.add('border-gray-200');
-                // Hilangkan indicator
                 const indicator = thumb.parentElement.querySelector('div.absolute');
                 if (indicator) indicator.style.display = 'none';
             });
             
-            // Tambah active ke thumbnail yang diklik
             event.target.classList.remove('border-gray-200');
             event.target.classList.add('border-red-600', 'active-thumbnail');
             const newIndicator = event.target.parentElement.querySelector('div.absolute') || 
@@ -589,7 +524,6 @@
             }
             newIndicator.style.display = 'block';
             
-            // Efek zoom ringan
             mainImage.style.transform = 'scale(1.02)';
             setTimeout(() => { mainImage.style.transform = 'scale(1)'; }, 300);
         }
@@ -612,10 +546,8 @@
         const price = {{ $hasDiscount ? $discountedPrice : $product->price }};
         function updateTotal() {
             const qty = document.getElementById('qty').value;
-            // Asumsi ada <span id="total">, update: document.getElementById('total').textContent = 'Rp ' + (price * qty).toLocaleString();
         }
         document.getElementById('increment').onclick = () => { /* increment logic */ updateTotal(); };
-        // Serupa untuk decrement
     </script>
 </body>
 </html>

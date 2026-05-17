@@ -5,30 +5,30 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="md:max-w-7xl 2xl:max-w-full mx-auto sm:px-6 lg:px-8 2xl:px-15">
-            <div class="bg-white overflow-hidden shadow-xs sm:rounded-lg">
+            <div class="bg-white overflow-hidden rounded-xl border border-gray-200 shadow-sm">
                 <div class="text-gray-900 p-5">
-                    <section class=":bg-gray-900 p-3 sm:p-0 antialiased">
-                        <h2 class="text-xl font-bold pl-4 mb-4">Categories</h2>
+                    <section class="p-3 sm:p-0 antialiased">
+                        <h2 class="text-xl font-black pl-4 mb-4 text-gray-950">Categories</h2>
                         <div class="md:max-w-screen-xl 2xl:max-w-full">
-                            <div class="bg-white :bg-gray-800 relative border sm:rounded-lg overflow-hidden">
+                            <div class="bg-white relative border border-gray-200 rounded-xl overflow-hidden">
                                 <div class="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0 md:space-x-4 p-4">
                                     <div class="w-full md:w-1/2">
                                         <form class="flex items-center" action="" method="GET">
                                             <label for="simple-search" class="sr-only">Search Product</label>
                                             <div class="relative w-full">
                                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 :text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                                     </svg>
                                                 </div>
-                                                <input type="text" id="simple-search" name="keyword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" placeholder="Search product">
+                                                <input type="text" id="simple-search" name="keyword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full pl-10 p-2" placeholder="Search category">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                                        <button type="button" id="createCategoryModalButton" data-modal-target="createCategoryModal" data-modal-toggle="createCategoryModal" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 :bg-blue-600 :hover:bg-blue-700 focus:outline-none :focus:ring-blue-800">
+                                        <button type="button" id="createCategoryModalButton" data-modal-target="createCategoryModal" data-modal-toggle="createCategoryModal" class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 focus:outline-none">
                                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                             </svg>
@@ -37,8 +37,8 @@
                                     </div>
                                 </div>
                                 <div class="overflow-x-auto">
-                                    <table class="w-full text-sm text-left text-gray-500 :text-gray-400">
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 :text-gray-400">
+                                    <table class="w-full text-sm text-left text-gray-500">
+                                        <thead class="text-xs text-white uppercase bg-gray-950">
                                             <tr>
                                                 <th scope="col" class="px-4 py-4">#</th>
                                                 <th scope="col" class="px-4 py-3">Nama Kategori</th>
@@ -115,11 +115,11 @@
                                     @csrf
                                     <div class="grid gap-4 mb-4">
                                         <div>
-                                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 :text-white">Name</label>
-                                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" placeholder="Type product name" required="">
+                                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" placeholder="Type category name" required="">
                                         </div>
                                     </div>
-                                    <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600 :hover:bg-blue-700 :focus:ring-blue-800">
+                                    <button type="submit" class="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                         <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                                         </svg>
@@ -152,12 +152,12 @@
                                         @method('PUT')
                                         <div class="grid gap-4 mb-4">
                                             <div>
-                                                <label for="name-{{ $category->id }}" class="block mb-2 text-sm font-medium text-gray-900 :text-white">Nama Produk</label>
-                                                <input type="text" name="name" id="name-{{ $category->id }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" value="{{ $category->name }}">
+                                                <label for="name-{{ $category->id }}" class="block mb-2 text-sm font-medium text-gray-900">Nama Kategori</label>
+                                                <input type="text" name="name" id="name-{{ $category->id }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" value="{{ $category->name }}">
                                             </div>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600 :hover:bg-blue-700 :focus:ring-blue-800">Update Category</button>
+                                            <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Category</button>
                                             <button type="button" data-modal-target="deleteModal-{{ $category->id }}" 
                                             data-modal-toggle="deleteModal-{{ $category->id }}" class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :border-red-500 :text-red-500 :hover:text-white :hover:bg-red-600 :focus:ring-red-900">
                                                 <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

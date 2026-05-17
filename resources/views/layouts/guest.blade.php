@@ -15,43 +15,64 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-950 antialiased">
-        <div class="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.24),transparent_26rem),linear-gradient(135deg,#111111_0%,#2a0d0d_46%,#f7f1e8_46%,#fffaf3_100%)] px-4 py-8">
-            <div class="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-                <div class="hidden text-white lg:block">
-                    <a href="/" class="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 backdrop-blur">
-                        <img src="{{ asset('images/logo cpx.jpeg') }}" alt="CPX" class="h-10 w-auto rounded-full">
-                        <span class="text-sm font-bold uppercase tracking-[0.28em]">CPX Official</span>
+        <div class="min-h-screen lg:grid lg:grid-cols-2">
+            {{-- Left side: dark branding panel --}}
+            <div class="hidden lg:flex lg:flex-col lg:justify-between bg-gray-950 relative overflow-hidden p-10">
+                {{-- Angular red accent shapes (CSS only) --}}
+                <div class="absolute top-0 right-0 w-64 h-64 bg-red-600/20 -translate-y-1/2 translate-x-1/2 rotate-45"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-red-600/10 translate-y-1/3 -translate-x-1/3 rotate-12"></div>
+                <div class="absolute top-1/2 right-10 w-1 h-32 bg-red-500/40 -rotate-12"></div>
+                <div class="absolute bottom-1/4 left-1/4 w-24 h-1 bg-red-500/30 rotate-45"></div>
+
+                {{-- Logo and branding --}}
+                <div class="relative z-10">
+                    <a href="/" class="inline-flex items-center gap-3 border border-white/10 bg-white/5 px-4 py-2">
+                        <img src="{{ asset('images/logo cpx.jpeg') }}" alt="CPX" class="h-10 w-auto rounded-lg">
+                        <span class="text-sm font-bold uppercase tracking-[0.28em] text-white">CPX Official</span>
                     </a>
-                    <h1 class="mt-10 max-w-xl text-6xl font-black leading-none tracking-tight">
-                        Masuk ke pusat kontrol jersey custom.
+                </div>
+
+                {{-- Large Bebas Neue branding --}}
+                <div class="relative z-10 my-auto">
+                    <h1 class="text-7xl font-black leading-none tracking-tight text-white" style="font-family: 'Bebas Neue', sans-serif;">
+                        PUSAT<br>KONTROL<br><span class="text-red-500">JERSEY.</span>
                     </h1>
-                    <p class="mt-5 max-w-lg text-base leading-7 text-white/70">
+                    <p class="mt-6 max-w-sm text-base leading-7 text-white/60">
                         Kelola katalog, promo, best seller, testimoni, dan jalur WhatsApp dengan tampilan baru yang lebih rapi.
                     </p>
-                    <div class="mt-8 grid max-w-xl grid-cols-3 gap-3 text-sm">
-                        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                            <p class="text-2xl font-black">01</p>
-                            <p class="mt-1 text-white/70">Produk</p>
+                    <div class="mt-8 grid max-w-sm grid-cols-3 gap-3 text-sm">
+                        <div class="border border-white/10 bg-white/5 p-4">
+                            <p class="text-2xl font-black text-red-500">01</p>
+                            <p class="mt-1 text-white/60">Produk</p>
                         </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                            <p class="text-2xl font-black">02</p>
-                            <p class="mt-1 text-white/70">Promo</p>
+                        <div class="border border-white/10 bg-white/5 p-4">
+                            <p class="text-2xl font-black text-red-500">02</p>
+                            <p class="mt-1 text-white/60">Promo</p>
                         </div>
-                        <div class="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                            <p class="text-2xl font-black">03</p>
-                            <p class="mt-1 text-white/70">Konten</p>
+                        <div class="border border-white/10 bg-white/5 p-4">
+                            <p class="text-2xl font-black text-red-500">03</p>
+                            <p class="mt-1 text-white/60">Konten</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full">
-                    <div class="mb-6 flex justify-center lg:hidden">
-                        <a href="/">
-                            <x-application-logo class="h-16 w-auto fill-current text-gray-800" />
-                        </a>
-                    </div>
+                {{-- Bottom accent line --}}
+                <div class="relative z-10">
+                    <div class="h-1 w-20 bg-red-500"></div>
+                </div>
+            </div>
 
-                    <div class="rounded-[2rem] border border-white/60 bg-white/85 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+            {{-- Right side: white auth form area --}}
+            <div class="flex min-h-screen flex-col items-center justify-center bg-white px-4 py-8 lg:min-h-0">
+                {{-- Mobile logo fallback --}}
+                <div class="mb-8 flex justify-center lg:hidden">
+                    <a href="/">
+                        <x-application-logo class="h-16 w-auto fill-current text-gray-800" />
+                    </a>
+                </div>
+
+                <div class="w-full max-w-md">
+                    <div class="border border-gray-200 bg-white p-6 shadow-xl sm:p-8">
                         {{ $slot }}
                     </div>
                 </div>
