@@ -1,61 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CPX Official
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CPX Official adalah aplikasi katalog dan dashboard admin untuk bisnis jersey custom. Aplikasi ini memakai Laravel, Blade, Tailwind, Alpine, Flowbite, dan Vite untuk mengelola produk, kategori, best seller, diskon, FAQ, testimoni, nomor WhatsApp, cart, serta halaman publik.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Landing page dengan desain CPX baru, hero visual, section about, katalog produk, dan CTA custom jersey.
+- Katalog produk dengan filter `All`, `Best Seller`, `New`, dan `Custom Design`.
+- Halaman detail produk dengan galeri, ukuran, kelebihan produk, harga diskon, cart, dan CTA WhatsApp.
+- Cart sederhana berbasis session.
+- Dashboard admin "CPX Command Center" dengan metrik operasional, health checklist, produk terbaru, distribusi kategori, diskon aktif, dan quick actions.
+- CRUD admin untuk produk, kategori, testimoni, FAQ, best seller, diskon, dan nomor WhatsApp.
+- Auth Laravel Breeze dengan login via email atau username.
+- Seeder demo untuk user, kategori, produk, dan ukuran.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP `^8.2`
+- Laravel `^12.0`
+- Pest `^3.8`
+- Laravel Pint
+- Vite `^7.0`
+- Tailwind CSS `^4.1`
+- Alpine.js
+- Flowbite
 
-## Learning Laravel
+## Setup Lokal
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Install dependency PHP dan Node:
+   - `composer install`
+   - `npm install`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Siapkan environment:
+   - `cp .env.example .env`
+   - `php artisan key:generate`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Siapkan SQLite lokal:
+   - `touch database/database.sqlite`
+   - Pastikan `.env` memakai `DB_CONNECTION=sqlite`.
 
-## Laravel Sponsors
+4. Jalankan migrasi dan seed:
+   - `php artisan migrate:fresh --seed`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Jalankan aplikasi:
+   - Terminal 1: `php artisan serve`
+   - Terminal 2: `npm run dev`
 
-### Premium Partners
+6. Buka aplikasi:
+   - Public site: `http://localhost:8000`
+   - Login admin: `http://localhost:8000/login`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Akun Demo
 
-## Contributing
+Seeder membuat user admin demo:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Username: `test`
+- Email: `test@example.com`
+- Password: `admin123`
 
-## Code of Conduct
+## Command Penting
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `php artisan test` - menjalankan seluruh test Laravel/Pest.
+- `npm run build` - build asset frontend production.
+- `./vendor/bin/pint` - format PHP sesuai Laravel Pint.
+- `composer run dev` - menjalankan server Laravel, queue listener, pail, dan Vite secara bersamaan.
 
-## Security Vulnerabilities
+## Struktur Penting
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- `routes/web.php` - route public, auth, cart, dashboard, dan admin.
+- `app/Http/Controllers/DashboardController.php` - agregasi data dashboard admin.
+- `resources/views/components/header.blade.php` - header publik global.
+- `resources/views/components/footer.blade.php` - footer publik global.
+- `resources/views/layouts/app.blade.php` - layout area admin/authenticated.
+- `resources/views/layouts/guest.blade.php` - layout login/register.
+- `resources/views/dashboard/index.blade.php` - dashboard admin.
+- `resources/views/home.blade.php` - landing page.
+- `resources/views/our-products.blade.php` - katalog produk.
+- `public/css/style.css` dan `resources/css/app.css` - design system CPX.
 
-## License
+## Catatan Desain
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Desain terbaru memakai arah visual CPX yang konsisten:
+
+- Header dan footer publik gelap dengan rounded container.
+- Background warm cream untuk halaman publik.
+- Aksen merah CPX untuk CTA, badge, dan hover state.
+- Card modern dengan radius besar dan shadow lembut.
+- Auth split layout untuk login/register.
+- Admin shell dan dashboard memakai gaya "Command Center".
+
+## Testing
+
+Sebelum merge, jalankan:
+
+- `php artisan test`
+- `npm run build`
+
+Untuk perubahan UI, lakukan manual check minimal pada:
+
+- `/`
+- `/our-products`
+- `/custom`
+- `/login`
+- `/dashboard`
