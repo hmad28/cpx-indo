@@ -53,7 +53,7 @@
                     <summary
                     class="flex items-center justify-between gap-1.5 rounded-lg bg-gray-900 p-4 text-white cursor-pointer hover:bg-gray-800 transition-colors"
                     >
-                    <h2 class="text-lg font-bold">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
+                    <h2 class="text-lg font-bold">Ukuran Jersey Sport Wanita</h2>
 
                     <svg
                         class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180 text-red-500"
@@ -68,9 +68,9 @@
 
                     <div class="my-10 text-center">
                         <img src="{{ asset('images/jersey-sport-women.jpeg') }}" 
-                            alt="Panduan Mengukur Jersey" 
+                            alt="Panduan Ukuran Jersey Sport Wanita" 
                             class="mx-auto w-[400px] rounded-lg shadow-md border border-white/10">
-                        <p class="mt-3 text-sm text-white/50">Jersey XC</p>
+                        <p class="mt-3 text-sm text-white/50">Jersey Sport Wanita</p>
                     </div>
                 </details>
 
@@ -78,7 +78,7 @@
                     <summary
                     class="flex items-center justify-between gap-1.5 rounded-lg bg-gray-900 p-4 text-white cursor-pointer hover:bg-gray-800 transition-colors"
                     >
-                    <h2 class="text-lg font-bold">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
+                    <h2 class="text-lg font-bold">Ukuran Jersey Pendek</h2>
 
                     <svg
                         class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180 text-red-500"
@@ -93,9 +93,9 @@
 
                     <div class="my-10 text-center">
                         <img src="{{ asset('images/size-jr-pendek.jpg') }}" 
-                            alt="Panduan Mengukur Jersey" 
+                            alt="Panduan Ukuran Jersey Pendek" 
                             class="mx-auto w-[400px] rounded-lg shadow-md border border-white/10">
-                        <p class="mt-3 text-sm text-white/50">Jersey XC</p>
+                        <p class="mt-3 text-sm text-white/50">Jersey Pendek</p>
                     </div>
                 </details>
             </div>
@@ -171,20 +171,5 @@
          <x-footer></x-footer>
     </main>
     <x-script></x-script>
-    <script>
-        const qtyInput = document.getElementById('qty');
-        const incrementBtn = document.getElementById('increment');
-        const decrementBtn = document.getElementById('decrement');
-
-        incrementBtn.addEventListener('click', () => {
-            qtyInput.value = parseInt(qtyInput.value) + 1;
-        });
-
-        decrementBtn.addEventListener('click', () => {
-            if (parseInt(qtyInput.value) > 1) {
-                qtyInput.value = parseInt(qtyInput.value) - 1;
-            }
-        });
-    </script>
 </body>
 </html>

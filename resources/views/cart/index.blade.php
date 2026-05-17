@@ -103,38 +103,6 @@
                             @endforelse
                         </div>
 
-                        <!-- People Also Bought -->
-                        {{-- <div class="mt-4 xl:mt-8">
-                            <h3 class="text-2xl font-semibold text-gray-900 :text-white">People also bought</h3>
-                            <div class="mt-6 w-full grid grid-cols-2 md:grid-cols-3 gap-4 sm:mt-8">
-                                @foreach ( $products as $product )
-                                    <div class="p-3 w-full hover:border hover:border-black cursor-pointer shadow">
-                                        <div class="flex flex-col items-start relative">
-                                            <a href="{{ route('product-page', $product->slug) }}" class="w-full">
-                                                <img src="../images/{{ $product->image }}" alt="" class="w-full mb-2 h-[160px] sm:h-[200px] md:h-[232px] lg:h-[220px] xl:h-[220px] 2xl:h-[330px]">
-                                            </a>
-                                            <h3 class="text-xs xl:text-sm text-gray-200 mb-1 md:mb-4 2xl:mb-2 py-1 px-2 rounded bg-red-500">{{ $product->category->name }}</h3>
-                                            <a href="{{ route('product-page', $product->slug) }}" class="text-sm md:text-2xl xl:text-4xl hover:underline w-30 md:w-56 2xl:w-80 truncate font-heading">{{ $product->name }}</a>
-                                            <div class="w-full flex flex-col items-start md:gap-2 lg:flex-row justify-between items-center mt-2">
-                                                <h2 class="text-sm md:text-lg font-semibold text-red-500">Rp {{ number_format($product->price, 0, ',', '.') }}</h2>
-                                                    <a href="https://wa.me/6285172003667?text=Halo%20kak,%20saya%20mau%20beli%20{{ urlencode($product->name) }}%20dengan%20harga%20Rp{{ number_format($product->price, 0, ',', '.') }}" 
-                                                target="_blank"
-                                                class="w-full md:w-auto text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300">
-                                                Beli Sekarang
-                                                </a>
-                                            </div>
-                                            <form action="{{ route('cart.add', $product->slug) }}" method="POST" class="absolute w-6 h-6 md:w-8 md:h-8 flex justify-center items-center right-0 border border-gray-500 rounded-full text-gray-500 hover:border-black hover:text-black">
-                                                @csrf
-                                                <button type="submit">
-                                                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div> --}}
-
                         <section id="products" class="mt-4 xl:mt-8"
                             x-data="{
                                 filter: 'all',
