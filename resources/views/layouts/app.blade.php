@@ -15,22 +15,24 @@
 
         @stack('style')
     </head>
-    <body class="font-sans antialiased text-gray-950">
+    <body class="font-sans antialiased text-gray-950 bg-gray-100">
         <div class="min-h-screen cpx-admin-shell">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="border-b border-black/5 bg-white/75 shadow-sm backdrop-blur-xl">
-                    <div class="max-w-7xl mx-auto py-7 px-4 sm:px-6 lg:px-8">
+                <header class="border-b border-gray-200 bg-white shadow-sm">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="py-6">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
         <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
