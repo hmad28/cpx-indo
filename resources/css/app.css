@@ -43,3 +43,37 @@
     font-family: var(--font-body);
   }
 }
+
+@layer components {
+  .cpx-admin-shell {
+    background:
+      radial-gradient(circle at top left, rgba(220, 38, 38, 0.12), transparent 28rem),
+      linear-gradient(180deg, #fffaf3 0%, #f5efe7 48%, #ffffff 100%);
+  }
+
+  .cpx-admin-card {
+    border-radius: 1.5rem;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    background: rgba(255, 250, 243, 0.88);
+    box-shadow: 0 24px 70px rgba(17, 17, 17, 0.08);
+    backdrop-filter: blur(18px);
+  }
+
+  .cpx-admin-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #ffffff;
+    padding: 0.75rem 1.1rem;
+    font-weight: 800;
+    transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    box-shadow: 0 16px 35px rgba(220, 38, 38, 0.22);
+  }
+
+  .cpx-admin-button:hover {
+    background: #991b1b;
+    transform: translateY(-1px);
+  }
+}

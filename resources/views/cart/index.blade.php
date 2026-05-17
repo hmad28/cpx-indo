@@ -11,20 +11,24 @@
     <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-white">
+<body class="cpx-shell">
     <main>
         <x-header></x-header>
 
-        <section class="bg-white pt-25 pb-8 antialiased lg:pb-16 lg:pt-36">
-            <div class="mx-auto px-4 md:px-20 lg:px-15 2xl:px-0 max-w-7xl 2xl:max-w-[1500px]">
-                <h2 class="text-2xl font-bold text-black sm:text-3xl mb-6">Shopping Cart</h2>
+        <section class="pt-32 pb-8 antialiased lg:pb-16 lg:pt-40">
+            <div class="cpx-container max-w-7xl 2xl:max-w-[1500px]">
+                <div class="mb-8 rounded-[2rem] bg-gray-950 p-7 text-white shadow-2xl md:p-10">
+                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Checkout</span>
+                    <h2 class="cpx-heading mt-4 text-6xl md:text-8xl">Shopping Cart</h2>
+                    <p class="mt-4 max-w-2xl text-white/65">Review pesanan jersey kamu sebelum lanjut checkout ke WhatsApp admin.</p>
+                </div>
 
                 <div class="mt-6 flex flex-col lg:flex-row gap-6 lg:gap-4 2xl:gap-8 justify-center">
                     <!-- Cart Items -->
                     <div class="lg:max-w-[800px] 2xl:max-w-[1200px] w-full">
                         <div class="space-y-4">
                             @forelse ($cart as $id => $item)
-                                <div class="rounded-lg border border-gray-200 bg-white p-4 lg:p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+                                <div class="cpx-card p-4 transition hover:-translate-y-1 lg:p-6">
                                     <div class="flex flex-col md:flex-row md:items-start md:justify-between md:gap-6 space-y-4 md:space-y-0">
                                         
                                         <div class="flex gap-4 items-start md:items-center flex-1 min-w-0">
@@ -93,7 +97,7 @@
                                     </div>
                                 </div>
                             @empty
-                                <div class="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="cpx-card text-center py-12">
                                     <i class="fas fa-shopping-cart text-4xl text-gray-400 mb-4"></i>
                                     <p class="text-lg text-gray-600 font-medium">Keranjang kamu kosong.</p>
                                     <a href="/#products" class="mt-4 inline-block text-red-600 hover:text-red-700 hover:underline text-sm">Mulai Belanja</a>
@@ -174,18 +178,18 @@
                             <div class="container mx-auto">
                                 <div class="w-full">
                                     <div class="w-full mb-2">
-                                        <h1 class="text-4xl font-semibold">Produk lainnya</h1>
+                                        <h1 class="cpx-heading text-5xl">Produk lainnya</h1>
                                     </div>
 
                                     <!-- product grid -->
                                     <div class="w-full py-4">
                                         <div class="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
                                             <template x-for="product in filteredProducts" :key="product.id">
-                                                <div class="p-3 hover:border hover:border-black cursor-pointer shadow" x-transition>
+                                                <div class="cpx-product-card p-3 cursor-pointer" x-transition>
                                                     <div class="flex flex-col items-start relative">
 
                                                         <a :href="product.url" class="w-full">
-                                                            <img :src="'../images/' + product.image" alt="" class="w-full h-[160px] sm:h-[280px] md:h-[230px] 2xl:h-[348px] mb-2">
+                                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[160px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[230px] 2xl:h-[348px]">
                                                         </a>
                                                         
                                                         <a :href="product.url" class="text-xl md:text-2xl xl:text-4xl hover:underline w-30 md:w-56 2xl:w-80 truncate font-heading" x-text="product.name"></a>

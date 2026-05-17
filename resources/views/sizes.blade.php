@@ -10,17 +10,21 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
 </head>
-<body>
+<body class="cpx-shell">
     <main>
         <x-header></x-header>
 
-        <div class="max-w-7xl mx-auto pb-15 pt-35 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-6">Panduan Ukuran Jersey</h1>
+        <div class="cpx-container pb-20 pt-36 sm:px-6 lg:px-8">
+            <div class="mb-8 rounded-[2rem] bg-gray-950 p-7 text-white shadow-2xl md:p-10">
+                <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Size Guide</span>
+                <h1 class="cpx-heading mt-4 text-6xl md:text-8xl">Panduan Ukuran Jersey</h1>
+                <p class="mt-4 max-w-2xl text-white/65">Pilih ukuran yang pas sebelum checkout agar jersey nyaman dipakai saat latihan maupun pertandingan.</p>
+            </div>
         
             <div class="space-y-4 my-10">
-                <details class="group [&_summary::-webkit-details-marker]:hidden" open>
+                <details class="cpx-card group p-3 [&_summary::-webkit-details-marker]:hidden" open>
                     <summary
-                    class="flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-gray-50 p-4 text-gray-900"
+                    class="flex items-center justify-between gap-1.5 rounded-2xl bg-white p-4 text-gray-900"
                     >
                     <h2 class="text-lg font-medium">Ukuran Jersey XC</h2>
 
@@ -43,9 +47,9 @@
                     </div>
                 </details>
 
-                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                <details class="cpx-card group p-3 [&_summary::-webkit-details-marker]:hidden">
                     <summary
-                    class="flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-gray-50 p-4 text-gray-900"
+                    class="flex items-center justify-between gap-1.5 rounded-2xl bg-white p-4 text-gray-900"
                     >
                     <h2 class="text-lg font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
 
@@ -68,9 +72,9 @@
                     </div>
                 </details>
 
-                <details class="group [&_summary::-webkit-details-marker]:hidden">
+                <details class="cpx-card group p-3 [&_summary::-webkit-details-marker]:hidden">
                     <summary
-                    class="flex items-center justify-between gap-1.5 rounded-md border border-gray-100 bg-gray-50 p-4 text-gray-900"
+                    class="flex items-center justify-between gap-1.5 rounded-2xl bg-white p-4 text-gray-900"
                     >
                     <h2 class="text-lg font-medium">Lorem ipsum dolor sit amet consectetur adipisicing?</h2>
 
@@ -100,7 +104,7 @@
             </p>
         
             <!-- Tabel Ukuran -->
-            <div class="overflow-x-auto rounded-lg shadow-md">
+            <div class="overflow-x-auto rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
                 <table class="min-w-full border border-gray-200 text-center text-sm">
                     <thead class="bg-gray-100">
                         <tr>
@@ -152,8 +156,8 @@
             </div>
         
             <!-- Tips -->
-            <div class="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
-                <h2 class="text-lg font-semibold text-blue-700 mb-2">Tips Memilih Ukuran:</h2>
+            <div class="mt-8 rounded-[1.5rem] border border-red-100 bg-red-50 p-5">
+                <h2 class="text-lg font-black text-red-700 mb-2">Tips Memilih Ukuran:</h2>
                 <ul class="list-disc pl-5 space-y-2 text-gray-700">
                     <li>Jika ragu, pilih ukuran lebih besar agar lebih nyaman.</li>
                     <li>Bandingkan dengan ukuran kaos yang biasa kamu pakai.</li>

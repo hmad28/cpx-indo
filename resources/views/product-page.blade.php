@@ -18,12 +18,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="cpx-shell">
     <main>
         <x-header></x-header>
 
-        <section class="bg-white pt-20 pb-8 lg:pt-30 md:pb-15 ">
-            <div class="pt-6 md:flex justify-center md:gap-5 px-4 mx-auto bg-white"> {{-- Background putih utama --}}
+        <section class="pt-32 pb-8 lg:pt-40 md:pb-15">
+            <div class="cpx-container cpx-card p-4 md:flex md:gap-5 lg:p-6"> {{-- Background utama --}}
     
                 <!-- Product info (Layout utama: Gallery + Deskripsi) -->
                 <div class="lg:flex md:pb-16 md:max-w-xl lg:max-w-3xl 2xl:max-w-5xl gap-3 lg:gap-x-8 lg:py-0 w-full">
@@ -31,7 +31,7 @@
                     <!-- Image Gallery dari product_images (Fokus Perubahan Ini) -->
                     <div class="md:w-[305px] lg:w-[320px] 2xl:w-[500px] mb-6 lg:mb-0 flex flex-col">
                         <!-- Main Image (selalu dari product->image, fallback jika kosong) -->
-                        <div id="mainImageContainer" data-modal-target="readImage-{{ $product->id }}" data-modal-toggle="readImage-{{ $product->id }}" class="relative rounded-lg overflow-hidden shadow-md border border-gray-200 bg-white">
+                        <div id="mainImageContainer" data-modal-target="readImage-{{ $product->id }}" data-modal-toggle="readImage-{{ $product->id }}" class="relative overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-xl">
                             <img id="mainImage" 
                                 src="{{ asset('images/' . $product->image) }}"  {{-- Selalu dari field image di tabel products --}}
                                 alt="{{ $product->name }} - Gambar Utama" 
@@ -152,10 +152,10 @@
                     </div>
 
                     <!-- Deskripsi Produk (Diperbaiki warna: Hitam untuk teks utama) -->
-                    <div class="w-full md:w-[300px] lg:w-[400px] 2xl:w-[600px] pr-4 lg:border-r lg:border-gray-200">
+                    <div class="w-full md:w-[300px] lg:w-[400px] 2xl:w-[600px] pr-4 lg:border-r lg:border-black/10">
                         <div class="w-full flex flex-col items-start">
-                            <h1 class="text-2xl font-bold tracking-tight text-black sm:text-3xl md:text-5xl font-heading">{{ $product->name }}</h1>
-                            <p class="mt-2 text-xs xl:text-sm text-white py-1 px-2 rounded bg-red-600 font-medium">{{ $product->category->name }}</p> {{-- Badge merah --}}
+                            <h1 class="cpx-heading text-5xl tracking-tight text-black sm:text-6xl md:text-7xl">{{ $product->name }}</h1>
+                            <p class="mt-3 rounded-full bg-red-600 px-3 py-1 text-xs font-black text-white xl:text-sm">{{ $product->category->name }}</p>
                         </div>
 
                         <div class="w-full py-4 lg:pt-3 lg:pr-8 lg:pb-5">

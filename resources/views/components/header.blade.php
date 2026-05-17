@@ -1,113 +1,84 @@
-<header class="bg-black fixed top-0 left-0 w-full flex items-center z-10">
-        <div class="container mx-auto">
-            <div class="flex items-center justify-between relative pl-4 pr-3 lg:px-15">
-                <div class="w-[40%] sm:w-[13%]">
-                    <a href="/" class="text-sm font-bold md:text-2xl text-yellow-800/70 block py-4 md:py-6">
-                        <img src="{{ asset('images/logo cpx.jpeg') }}" alt="">
-                    </a>
+<header x-data="{ openMenu: false }" class="fixed left-0 top-0 z-50 w-full px-3 pt-3">
+    <div class="mx-auto max-w-7xl rounded-full border border-white/15 bg-gray-950/88 px-4 py-3 text-white shadow-2xl shadow-black/20 backdrop-blur-xl lg:px-5">
+        <div class="flex items-center justify-between gap-4">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <img src="{{ asset('images/logo cpx.jpeg') }}" alt="CPX Official" class="h-10 w-10 rounded-full object-cover ring-2 ring-white/10">
+                <div class="leading-none">
+                    <p class="text-sm font-black uppercase tracking-[0.22em]">CPX</p>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/50">Official Wear</p>
                 </div>
-                {{-- <div class="relative">
-                    <form action="#" method="POST">
-                        @csrf
-                        <input type="text" class="w-[80%] md:w-[100%] pl-6 pr-1 py-1 md:py-2 md:pl-8 md:pr-5 rounded-lg bg-slate-200 placeholder:text-sm md:placeholder:text-base" placeholder="Search ..." name="product_name">
-                        <i class="text-xs md:text-base fa-solid fa-magnifying-glass absolute left-2 top-[10px] md:top-3 text-slate-500"></i>
-                    </form>
-                </div> --}}
-                <div x-data="{ openMenu: false, openDropdown: false }" class="flex items-center px-4 lg:px-15">
-                    <button @click="openMenu = !openMenu" type="button"
-                        class="block lg:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-                        <span class="hamburger-line block w-6 h-0.5 bg-white mb-1 transition"
-                            :class="{ 'rotate-45 translate-y-1.5': openMenu }"></span>
-                        <span class="hamburger-line block w-6 h-0.5 bg-white mb-1 transition"
-                            :class="{ 'opacity-0': openMenu }"></span>
-                        <span class="hamburger-line block w-6 h-0.5 bg-white transition"
-                            :class="{ '-rotate-45 -translate-y-1.5': openMenu }"></span>
+            </a>
+
+            <nav class="hidden items-center gap-1 lg:flex">
+                <a href="{{ route('about') }}" class="rounded-full px-4 py-2 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white">About</a>
+                <a href="{{ route('custom') }}" class="rounded-full px-4 py-2 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white">Custom</a>
+                <a href="{{ route('our-products') }}" class="rounded-full px-4 py-2 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white">Products</a>
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = ! open" class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white">
+                        Kategori
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                     </button>
-
-                    <nav :class="{ 'hidden': !openMenu }" id="nav-menu" class="hidden absolute left-1/2 transform -translate-x-1/2 top-20 sm:top-0 sm:left-auto sm:translate-x-0 sm:transform-none py-4 bg-black text-gray-300 shadow-lg px-2 rounded-lg max-w-[200px] w-full right-4 top-15 lg:right-20 lg:block lg:static md:bg-transparent lg:max-w-full lg:shadow-none lg:rounded-none">
-                        <ul class="block lg:flex lg:gap-5 items-center">
-                            <li class="group mt-1 sm:mt-0">
-                                <a href="/about" class="text-sm md:text-base text-gray-300 py-1 w-full px-2 md:px-4 flex border-b border-black group-hover:text-red-700 group-hover:border-b group-hover:border-red-500 rounded-2xl duration-200">About Us</a>
-                            </li>
-                            <li class="group">
-                                <a href="/custom" class="text-sm md:text-base text-gray-300 py-1 w-full px-2 md:px-4 flex border-b border-black group-hover:text-red-700 group-hover:border-b group-hover:border-red-500 rounded-2xl duration-200">Custom</a>
-                            </li>
-                            <li class="group mt-1 sm:mt-0" x-data="{ open: false }">
-                                <div class="relative">
-                                    <button @click="open = !open" class="flex items-center justify-between w-full px-2 md:px-4 py-1 border-b border-black group-hover:text-red-700 group-hover:border-red-500 focus:text-red-700 focus:border-red-500 rounded-2xl duration-200">
-                                        <span class="text-sm md:text-base">Kategori Jersey</span>
-                                        <!-- Icon berubah tergantung state -->
-                                        <svg x-show="!open" class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                        <svg x-show="open" class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </button>
-
-                                    <ul x-show="open" x-transition @click.outside="open = false" class="absolute text-sm md:text-base bg-zinc-900 border mt-4 rounded-md border-red-700 shadow-md w-48 z-10">
-                                        @foreach ( $categories as $category )
-                                            <li><a href="{{ route('products.byCategory', ['category' => $category->slug]) }}" class="block px-4 py-2 hover:bg-zinc-800 text-white">{{ $category->name }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="group mt-1 sm:mt-0">
-                                <a href="/testimonials" class="text-sm md:text-base text-gray-300 py-1 w-full px-2 md:px-4 flex border-b border-black group-hover:text-red-700 group-hover:border-b group-hover:border-red-500 rounded-2xl duration-200">Testimonials</a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                </div>
-                <div class="flex gap-5 items-center">
-                    <a href="/cart" class="text-sm md:text-base text-white hover:text-red-500 cursor-pointer">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" 
-                            class="flex items-center text-sm md:text-base text-white justify-between py-1 w-full px-2 mr-2 md:mr-5 md:px-4 border-b border-black focus:text-red-700 focus:border-red-500 cursor-pointer rounded-2xl group-hover:text-red-700 group-hover:border-b group-hover:border-red-500 duration-200">
-                            
-                            {{-- ✅ Nama user atau tulisan Sign In --}}
-                            <span>
-                                @auth
-                                    {{ Auth::user()->name }}
-                                @else
-                                    Sign In
-                                @endauth
-                            </span>
-
-                            {{-- ✅ Icon panah --}}
-                            <svg x-show="!open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                            <svg x-show="open" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </button>
-
-                        {{-- ✅ Dropdown Menu Dinamis --}}
-                        <ul x-show="open" @click.away="open = false"
-                            class="absolute bg-zinc-900 border mt-4 right-1 md:right-0 rounded-md border-red-700 shadow-md w-20 md:w-36 z-10 text-white">
-                            @auth
-                            <li><a href="{{ route('dashboard') }}" class="block text-xs md:text-base px-4 py-2 hover:bg-zinc-800">Dashboard</a></li>
-                            <li><a href="{{ route('profile.edit') }}" class="block text-xs md:text-base px-4 py-2 hover:bg-zinc-800">Profil</a></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="block text-xs md:text-base w-full text-left px-4 py-2 hover:bg-zinc-800">
-                                            Log Out
-                                        </button>
-                                    </form>
-                                </li>
-                            @else
-                                <li><a href="{{ route('login') }}" class="block text-xs md:text-base px-4 py-2 text-gray-200 hover:bg-zinc-800">Log In</a></li>
-                                {{-- <li><a href="{{ route('register') }}" class="block text-xs md:text-base px-4 py-2 text-gray-200 hover:bg-zinc-800">Sign Up</a></li> --}}
-                            @endauth
-                        </ul>
+                    <div x-show="open" x-transition @click.outside="open = false" class="absolute left-0 mt-3 w-56 rounded-2xl border border-white/10 bg-gray-950 p-2 shadow-2xl">
+                        @foreach ($categories as $category)
+                            <a href="{{ route('products.byCategory', ['category' => $category->slug]) }}" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white">{{ $category->name }}</a>
+                        @endforeach
                     </div>
-
                 </div>
+                <a href="{{ route('testimonials') }}" class="rounded-full px-4 py-2 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white">Testimonials</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <a href="{{ route('cart.index') }}" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white hover:text-gray-950" aria-label="Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+
+                <div class="relative hidden sm:block" x-data="{ open: false }">
+                    <button @click="open = ! open" class="inline-flex items-center gap-2 rounded-full bg-red-600 px-4 py-2 text-sm font-black text-white transition hover:bg-red-700">
+                        @auth
+                            {{ Auth::user()->name }}
+                        @else
+                            Sign In
+                        @endauth
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition @click.away="open = false" class="absolute right-0 mt-3 w-48 rounded-2xl border border-black/10 bg-white p-2 text-gray-900 shadow-2xl">
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="block rounded-xl px-4 py-2 text-sm font-bold hover:bg-red-50 hover:text-red-700">Dashboard</a>
+                            <a href="{{ route('profile.edit') }}" class="block rounded-xl px-4 py-2 text-sm font-bold hover:bg-red-50 hover:text-red-700">Profil</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="block w-full rounded-xl px-4 py-2 text-left text-sm font-bold hover:bg-red-50 hover:text-red-700">Log Out</button>
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="block rounded-xl px-4 py-2 text-sm font-bold hover:bg-red-50 hover:text-red-700">Log In</a>
+                            <a href="{{ route('register') }}" class="block rounded-xl px-4 py-2 text-sm font-bold hover:bg-red-50 hover:text-red-700">Register</a>
+                        @endauth
+                    </div>
+                </div>
+
+                <button @click="openMenu = ! openMenu" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/10 lg:hidden" aria-label="Menu">
+                    <span class="sr-only">Open menu</span>
+                    <i class="fa-solid" :class="openMenu ? 'fa-xmark' : 'fa-bars'"></i>
+                </button>
             </div>
-            
         </div>
-    </header>
+
+        <div x-show="openMenu" x-transition class="mt-4 border-t border-white/10 pt-4 lg:hidden">
+            <div class="grid gap-2">
+                <a href="{{ route('about') }}" class="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 hover:bg-white/10 hover:text-white">About</a>
+                <a href="{{ route('custom') }}" class="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 hover:bg-white/10 hover:text-white">Custom</a>
+                <a href="{{ route('our-products') }}" class="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 hover:bg-white/10 hover:text-white">Products</a>
+                <a href="{{ route('testimonials') }}" class="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 hover:bg-white/10 hover:text-white">Testimonials</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="rounded-2xl px-4 py-3 text-sm font-bold text-white/75 hover:bg-white/10 hover:text-white">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" class="rounded-2xl bg-red-600 px-4 py-3 text-sm font-black text-white">Log In</a>
+                @endauth
+            </div>
+        </div>
+    </div>
+</header>

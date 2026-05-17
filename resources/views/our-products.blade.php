@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
 </head>
-<body>
+<body class="cpx-shell">
     <main>
         <x-header></x-header>
 
-        <section id="products" class="py-10 md:pt-35 px-4 md:px-15"
+        <section id="products" class="cpx-section pt-32 md:pt-40"
             x-data="{
                 filter: 'all',
                 products: {{ $products->map(fn($p) => [
@@ -51,20 +51,21 @@
                     return items;
                 }
             }">
-            <div class="container mx-auto">
+            <div class="cpx-container">
                 <div class="w-full">
-                    <div class="w-full mb-5">
-                        <h1 class="text-4xl font-semibold mb-3">Our Products Design</h1>
-                        <div class="w-[50%] h-[1px] bg-zinc-900"></div>
+                    <div class="mb-8 rounded-[2rem] bg-gray-950 p-7 text-white shadow-2xl md:p-10">
+                        <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Katalog CPX</span>
+                        <h1 class="cpx-heading mt-4 text-6xl md:text-8xl">Our Products Design</h1>
+                        <p class="mt-4 max-w-2xl text-white/65">Pilih jersey siap pakai, best seller, produk terbaru, atau inspirasi custom untuk tim kamu.</p>
                     </div>
 
                     <!-- filter buttons (tetap sama) -->
-                    <div class="w-full flex gap-2 md:gap-5">
+                    <div class="flex flex-wrap gap-3">
                         <template x-for="type in ['all','best','new','custom']" :key="type">
                             <button
                                 @click="filter = type"
-                                :class="filter === type ? 'bg-black text-white border-black' : 'border border-white'"
-                                class="py-1 px-2 text-xs md:text-base md:py-2 md:px-4 cursor-pointer hover:border hover:border-black capitalize">
+                                :class="filter === type ? 'bg-gray-950 text-white border-gray-950' : 'border-black/10 bg-white text-gray-700'"
+                                class="rounded-full border px-4 py-2 text-xs font-black capitalize shadow-sm transition hover:border-red-400 hover:text-red-600 md:text-sm">
                                 <span x-text="type === 'best' ? 'Best Seller' : (type === 'custom' ? 'Custom Design' : (type === 'new' ? 'New' : 'All'))"></span>
                             </button>
                         </template>
@@ -74,14 +75,14 @@
                     <div class="w-full py-8">
                         <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             <template x-for="product in filteredProducts" :key="product.id">
-                                <div class="p-3 hover:border hover:border-black cursor-pointer shadow" x-transition>
+                                <div class="cpx-product-card p-3 cursor-pointer" x-transition>
                                     <div class="flex flex-col items-start relative">
 
                                         <a :href="product.url" class="w-full">
-                                            <img :src="'../images/' + product.image" alt="" class="w-full h-[160px] sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px] mb-2">
+                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[180px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px]">
                                         </a>
                                         
-                                        <a :href="product.url" class="text-xl md:text-2xl xl:text-4xl hover:underline w-30 md:w-64 2xl:w-80 truncate font-heading" x-text="product.name"></a>
+                                        <a :href="product.url" class="cpx-heading w-30 truncate text-3xl hover:text-red-600 md:w-64 xl:text-4xl 2xl:w-80" x-text="product.name"></a>
                                         
                                         {{-- Bagian Harga dengan Diskon (Update di sini) --}}
                                         <div class="w-full flex flex-col items-start md:gap-2  justify-between items-center md:mt-2">
@@ -128,7 +129,7 @@
                                             @foreach($productCardNumbers as $wa)
                                                 <a 
                                                     :href="`{{ $wa->whatsapp_url }}Halo%20kak,%20saya%20mau%20beli%20${encodeURIComponent(product.name)}%20dengan%20harga%20Rp${product.has_discount ? product.discounted_price : product.original_price}`"
-                                                    class="w-full text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300" 
+                                                    class="mt-3 w-full rounded-full border border-black/10 bg-gray-950 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-red-600 xl:text-base"
                                                     target="_blank"
                                                 >
                                                     Beli Sekarang 1

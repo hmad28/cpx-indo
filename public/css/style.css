@@ -84,3 +84,113 @@
   body {
     font-family: 'Poppins', sans-serif;
   }
+
+:root {
+  --cpx-ink: #111111;
+  --cpx-muted: #6b625c;
+  --cpx-paper: #f7f1e8;
+  --cpx-card: #fffaf3;
+  --cpx-red: #dc2626;
+  --cpx-red-dark: #991b1b;
+  --cpx-gold: #f5b301;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(220, 38, 38, 0.12), transparent 32rem),
+    linear-gradient(180deg, #fffaf3 0%, var(--cpx-paper) 48%, #ffffff 100%);
+  color: var(--cpx-ink);
+}
+
+.cpx-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(245, 179, 1, 0.16), transparent 26rem),
+    radial-gradient(circle at 90% 10%, rgba(220, 38, 38, 0.14), transparent 24rem),
+    var(--cpx-paper);
+}
+
+.cpx-container {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+}
+
+.cpx-section {
+  padding-block: clamp(4rem, 7vw, 7rem);
+}
+
+.cpx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  background: rgba(220, 38, 38, 0.08);
+  padding: 0.45rem 0.8rem;
+  color: var(--cpx-red-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cpx-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+}
+
+.cpx-card {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 1.5rem;
+  background: rgba(255, 250, 243, 0.86);
+  box-shadow: 0 24px 70px rgba(17, 17, 17, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.cpx-btn-primary,
+.cpx-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.85rem 1.25rem;
+  font-weight: 800;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.cpx-btn-primary {
+  background: var(--cpx-red);
+  color: white;
+  box-shadow: 0 16px 35px rgba(220, 38, 38, 0.24);
+}
+
+.cpx-btn-secondary {
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  background: white;
+  color: var(--cpx-ink);
+}
+
+.cpx-btn-primary:hover,
+.cpx-btn-secondary:hover {
+  transform: translateY(-2px);
+}
+
+.cpx-btn-primary:hover {
+  background: var(--cpx-red-dark);
+}
+
+.cpx-product-card {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 1.35rem;
+  background: white;
+  box-shadow: 0 18px 45px rgba(17, 17, 17, 0.08);
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.cpx-product-card:hover {
+  border-color: rgba(220, 38, 38, 0.38);
+  box-shadow: 0 24px 55px rgba(220, 38, 38, 0.13);
+  transform: translateY(-4px);
+}

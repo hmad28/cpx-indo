@@ -1,4 +1,10 @@
 <x-guest-layout>
+    <div class="mb-8">
+        <p class="text-xs font-black uppercase tracking-[0.3em] text-red-600">Create Access</p>
+        <h1 class="mt-2 text-3xl font-black text-gray-950">Buat akun CPX</h1>
+        <p class="mt-2 text-sm leading-6 text-gray-500">Daftar untuk mulai mengelola katalog dan order jersey custom.</p>
+    </div>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -46,12 +52,12 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-400 hover:text-gray-500 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <a class="text-sm font-bold text-gray-500 hover:text-red-600 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button>
                 {{ __('Register') }}
             </x-primary-button>
         </div>

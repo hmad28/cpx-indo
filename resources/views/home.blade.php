@@ -11,15 +11,30 @@
     <link rel="icon" href="{{ asset('images/logo cpx.ico') }}" type="image/x-icon"/>
     <title>CPX Official | Sport Wear Premium Quality</title>
 </head>
-<body class=" font-body">
+<body class="font-body cpx-shell">
     <x-header></x-header>
 
     <main>
-        <section id="main" class="relativ pt-19 w-full md:h-screen overflow-hidden md:pt-0 md:mt-20 2xl:mt-25">
+        <section id="main" class="relative min-h-[720px] w-full overflow-hidden pt-28 md:h-screen md:pt-0">
             <div id="slider1" class="flex w-full h-full transition-transform duration-700 ease-in-out">
                 <img src="{{ asset('images/main1.png') }}" class="w-full flex-shrink-0 object-cover" />
                 <img src="{{ asset('images/main2.png') }}" class="w-full flex-shrink-0 object-cover" />
                 <img src="{{ asset('images/main3.png') }}" class="w-full flex-shrink-0 object-cover" />
+            </div>
+
+            <div class="absolute inset-0 bg-gradient-to-r from-black/82 via-black/42 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center">
+                <div class="cpx-container pt-16 text-white">
+                    <span class="cpx-eyebrow border-white/15 bg-white/10 text-white">Custom Jersey Studio</span>
+                    <h1 class="cpx-heading mt-5 max-w-4xl text-6xl md:text-8xl">Bikin jersey tim yang kelihatan beda.</h1>
+                    <p class="mt-6 max-w-2xl text-base leading-8 text-white/75 md:text-lg">
+                        CPX bantu tim, komunitas, dan brand tampil solid lewat desain custom, bahan nyaman, dan proses produksi yang rapi.
+                    </p>
+                    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                        <a href="{{ route('our-products') }}" class="cpx-btn-primary">Lihat Katalog</a>
+                        <a href="{{ route('custom') }}" class="cpx-btn-secondary">Mulai Custom</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Navigation dots -->
@@ -42,27 +57,27 @@
             </div> --}}
         </section>
 
-        <section id="about" class="py-20 px-4 md:px-15 overflow-hidden">
-            <div class="container mx-auto">
-                <div class="w-full md:flex">
-                    <div class="w-full md:w-1/2 mb-5 md:mb-0">
+        <section id="about" class="cpx-section overflow-hidden">
+            <div class="cpx-container">
+                <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+                    <div>
                         <div class="w-full">
-                            <img src="{{ asset('images/about3.jpg') }}" alt="" class="shadow-lg w-full">
+                            <img src="{{ asset('images/about3.jpg') }}" alt="" class="cpx-card w-full object-cover p-3">
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 flex flex-col justify-center gap-8 px-4 md:px-8">
+                    <div class="flex flex-col justify-center gap-8">
                         <div class="w-full mb-5 md:mb-0">
-                            <h2 class="text-xl md:text-2xl mb-3 md:mb-0">About</h2>
-                            <h1 class="text-6xl font-bold"><span class="italic">CP<span class="text-red-500">X</span></span> INDONESIA</h1>
+                            <span class="cpx-eyebrow">About CPX</span>
+                            <h1 class="cpx-heading mt-4 text-6xl md:text-7xl"><span class="italic">CP<span class="text-red-600">X</span></span> INDONESIA</h1>
                         </div>
-                        <div class="w-full flex flex-col gap-5 mb-5 md:mb-0">
+                        <div class="flex flex-col gap-5 text-gray-700">
                             <p>Kami bukan sekadar jual jersey — kami hadir buat kamu yang punya semangat sportivitas dan gaya. Di CPX, setiap jahitan jersey kami dirancang buat kasih performa dan kenyamanan maksimal. Dari jersey bola, futsal, basket, sampai e-sport, semua bisa custom sesuai keinginan kamu.</p>
 
                             <p>Dengan pengalaman bertahun-tahun di industri ini, kami telah dipercaya oleh ratusan tim futsal, sepak bola, basket, hingga komunitas e-sport di seluruh Indonesia.</p>
 
                             <div>
-                                <span>Misi Kami</span>
-                                <ul class="list-disc pl-5 flex flex-col gap-2">
+                                <span class="font-black text-gray-950">Misi Kami</span>
+                                <ul class="mt-3 grid gap-3">
                                     <li class="mt-2">Memberikan kebebasan desain agar setiap tim punya ciri khas unik.</li>
                                     <li>Menggunakan bahan premium dan nyaman dipakai.</li>
                                     <li>Menjamin proses produksi cepat dan pengiriman tepat waktu.</li>
@@ -73,13 +88,13 @@
                         <div class="w-full">
                             <div class="w-full flex gap-3">
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about2.jpg') }}" alt="" class="shadow-lg">
+                                    <img src="{{ asset('images/about2.jpg') }}" alt="" class="rounded-3xl shadow-lg">
                                 </div>
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about1.jpg') }}" alt="" class="shadow-lg">
+                                    <img src="{{ asset('images/about1.jpg') }}" alt="" class="rounded-3xl shadow-lg">
                                 </div>
                                 <div class="w-1/3">
-                                    <img src="{{ asset('images/about4.jpg') }}" alt="" class="shadow-lg">
+                                    <img src="{{ asset('images/about4.jpg') }}" alt="" class="rounded-3xl shadow-lg">
                                 </div>
                             </div>
                         </div>
@@ -119,7 +134,7 @@
             </div>
         </section>
 
-        <section id="products" class="py-10 md:py-20 px-4 md:px-15"
+        <section id="products" class="cpx-section"
             x-data="{
                 filter: 'all',
                 products: {{ $products->map(fn($p) => [
@@ -157,20 +172,23 @@
                     return items;
                 }
             }">
-            <div class="container mx-auto">
+            <div class="cpx-container">
                 <div class="w-full">
-                    <div class="w-full mb-5">
-                        <h1 class="text-4xl font-semibold mb-3">Our Products Design</h1>
-                        <div class="w-[50%] h-[1px] bg-zinc-900"></div>
+                    <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <span class="cpx-eyebrow">Katalog CPX</span>
+                            <h1 class="cpx-heading mt-4 text-5xl md:text-7xl">Our Products Design</h1>
+                        </div>
+                        <a href="{{ route('our-products') }}" class="cpx-btn-secondary">Lihat Semua</a>
                     </div>
 
                     <!-- filter buttons (tetap sama) -->
-                    <div class="w-full flex gap-2 md:gap-5">
+                    <div class="flex flex-wrap gap-3">
                         <template x-for="type in ['all','best','new','custom']" :key="type">
                             <button
                                 @click="filter = type"
-                                :class="filter === type ? 'bg-black text-white border-black' : 'border border-white'"
-                                class="py-1 px-2 text-xs md:text-base md:py-2 md:px-4 cursor-pointer hover:border hover:border-black capitalize">
+                                :class="filter === type ? 'bg-gray-950 text-white border-gray-950' : 'border-black/10 bg-white text-gray-700'"
+                                class="rounded-full border px-4 py-2 text-xs font-black capitalize shadow-sm transition hover:border-red-400 hover:text-red-600 md:text-sm">
                                 <span x-text="type === 'best' ? 'Best Seller' : (type === 'custom' ? 'Custom Design' : (type === 'new' ? 'New' : 'All'))"></span>
                             </button>
                         </template>
@@ -180,12 +198,12 @@
                     <div class="w-full py-8">
                         <div class="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             <template x-for="product in filteredProducts" :key="product.id">
-                                <div class="p-3 hover:border hover:border-black cursor-pointer shadow" x-transition>
+                                <div class="cpx-product-card p-3 cursor-pointer" x-transition>
                                     <div class="flex flex-col items-start relative">
                                         <a :href="product.url" class="w-full">
-                                            <img :src="'../images/' + product.image" alt="" class="w-full h-[200px] sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px] mb-2">
+                                            <img :src="'../images/' + product.image" alt="" class="mb-3 h-[200px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[230px] lg:h-[280px] 2xl:h-[348px]">
                                         </a>
-                                        <a :href="product.url" class="text-sm md:text-2xl xl:text-4xl hover:underline w-30 md:w-64 2xl:w-80 truncate font-heading" x-text="product.name"></a>
+                                        <a :href="product.url" class="cpx-heading w-30 truncate text-3xl hover:text-red-600 md:w-64 xl:text-4xl 2xl:w-80" x-text="product.name"></a>
                                         
                                         {{-- Bagian Harga dengan Diskon (Update di sini) --}}
                                         <div class="w-full flex flex-col items-start md:gap-2  justify-between items-center mt-2">
@@ -232,7 +250,7 @@
                                             @foreach($productCardNumbers as $wa)
                                                 <a 
                                                     :href="`{{ $wa->whatsapp_url }}Halo%20kak,%20saya%20mau%20beli%20${encodeURIComponent(product.name)}%20dengan%20harga%20Rp${product.has_discount ? product.discounted_price : product.original_price}`"
-                                                    class="w-full text-center mt-2 md:mt-0 py-1 px-2 md:py-2 md:px-3 text-xs xl:text-base rounded border hover:bg-black hover:text-white transition duration-300" 
+                                                    class="mt-3 w-full rounded-full border border-black/10 bg-gray-950 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-red-600 xl:text-base"
                                                     target="_blank"
                                                 >
                                                     Beli Sekarang 1
