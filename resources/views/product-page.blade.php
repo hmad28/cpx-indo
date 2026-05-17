@@ -177,7 +177,7 @@
                             <!-- Detail Produk -->
                             <div class="mt-5 lg:mt-10">
                                 <h2 class="text-sm font-medium text-black mb-2">Detail Produk</h2>
-                                <div class="text-sm text-gray-700 leading-relaxed">{!! $product->description !!}</div>
+                                <div class="text-sm text-gray-700 leading-relaxed">{!! \App\Support\HtmlSanitizer::clean($product->description) !!}</div>
                             </div>
                         </div>
                     </div>

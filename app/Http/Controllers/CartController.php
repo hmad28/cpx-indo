@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Size;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Models\Size;
 use App\Models\WhatsappNumber;
-use Carbon\Carbon; // Jika perlu fallback cek diskon di add (opsional)
+use Carbon\Carbon;
+use Illuminate\Http\Request; // Jika perlu fallback cek diskon di add (opsional)
 
 class CartController extends Controller
 {
@@ -42,40 +42,36 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $footerNumbers = WhatsappNumber::getActiveByPageAndPosition('Home', 'footer');
         $productCardNumbers = WhatsappNumber::getActiveByPageAndPosition('Home', 'product_card');
+
         return view('cart.index', compact(['cart', 'products', 'productCardNumbers', 'footerNumbers']));
     }
 
     public function add(Request $request, Product $product)
     {
+        $validated = $request->validate([
+            'qty' => ['nullable', 'integer', 'min:1', 'max:99'],
+            'size' => ['nullable', 'string', 'max:20'],
+        ]);
+
         $cart = session()->get('cart', []);
-        $qty = $request->input('qty', 1);
-        $size = $request->input('size'); // ambil dari radio button
+        $qty = (int) ($validated['qty'] ?? 1);
+        $size = $validated['size'] ?? null; // ambil dari radio button
 
-        // Capture diskon dari hidden inputs (dari form product/home)
         $originalPrice = $product->price;
-        $discountPercentage = (float) $request->input('discount_percentage', 0);
-        $discountedPrice = $discountPercentage > 0 
-            ? round($originalPrice * (1 - $discountPercentage / 100)) 
+        $activeDiscount = $product->diskons
+            ->where('status', 'active')
+            ->where('start_date', '<=', Carbon::today())
+            ->where('end_date', '>=', Carbon::today())
+            ->sortByDesc('discount_percentage')
+            ->first();
+        $discountPercentage = $activeDiscount ? (float) $activeDiscount->discount_percentage : 0;
+        $discountedPrice = $activeDiscount
+            ? round($originalPrice * (1 - $discountPercentage / 100))
             : $originalPrice;
-        $hasDiscount = $discountPercentage > 0;
-
-        // Fallback: Jika tidak ada hidden, cek diskon aktif dari DB (opsional, untuk kompatibilitas)
-        if (!$hasDiscount) {
-            $activeDiscount = $product->diskons
-                ->where('status', 'active')
-                ->where('start_date', '<=', Carbon::today())
-                ->where('end_date', '>=', Carbon::today())
-                ->sortByDesc('discount_percentage')
-                ->first();
-            if ($activeDiscount) {
-                $discountPercentage = $activeDiscount->discount_percentage;
-                $discountedPrice = round($originalPrice * (1 - $discountPercentage / 100));
-                $hasDiscount = true;
-            }
-        }
+        $hasDiscount = $activeDiscount !== null;
 
         // bikin key unik supaya size berbeda tetap bisa masuk cart
-        $cartKey = $product->id . '-' . $size;
+        $cartKey = $product->id.'-'.$size;
 
         $cart[$cartKey] = [
             'image' => $product->image,
@@ -99,35 +95,35 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         $total = 0;
         $message = "Halo, saya mau pesan:\n";
-        
-        foreach($cart as $c){
+
+        foreach ($cart as $c) {
             $subtotal = $c['qty'] * $c['price'];
             $total += $subtotal;
-            $priceText = $c['has_discount'] 
-                ? "Rp " . number_format($c['original_price'], 0, ',', '.') . " (Diskon " . $c['discount_percentage'] . "% = Rp " . number_format($subtotal / $c['qty'], 0, ',', '.') . ")"
-                : "Rp " . number_format($subtotal / $c['qty'], 0, ',', '.');
+            $priceText = $c['has_discount']
+                ? 'Rp '.number_format($c['original_price'], 0, ',', '.').' (Diskon '.$c['discount_percentage'].'% = Rp '.number_format($subtotal / $c['qty'], 0, ',', '.').')'
+                : 'Rp '.number_format($subtotal / $c['qty'], 0, ',', '.');
             $message .= "- {$c['name']} (Size: {$c['size']}) x{$c['qty']} = {$priceText}\n";
         }
-        $message .= "\nTotal: Rp " . number_format($total, 0, ',', '.');
+        $message .= "\nTotal: Rp ".number_format($total, 0, ',', '.');
 
         // Ambil data WhatsApp number
         $whatsappData = WhatsappNumber::getActiveByPageAndPosition('Cart', 'cart_section');
-        
+
         // Cek apakah ada data
         if ($whatsappData->isEmpty()) {
             return back()->with('error', 'Nomor WhatsApp tidak ditemukan');
         }
-        
+
         // Ambil nomor telepon dari item pertama
         $phoneNumber = $whatsappData->first()->phone_number;
-        
+
         // Format nomor (tambahkan 62 jika dimulai dengan 0)
         if (substr($phoneNumber, 0, 1) === '0') {
-            $phoneNumber = '62' . substr($phoneNumber, 1);
+            $phoneNumber = '62'.substr($phoneNumber, 1);
         }
-        
+
         // Buat URL WhatsApp
-        $waUrl = "https://wa.me/{$phoneNumber}?text=" . urlencode($message);
+        $waUrl = "https://wa.me/{$phoneNumber}?text=".urlencode($message);
 
         return redirect($waUrl);
     }
@@ -135,17 +131,22 @@ class CartController extends Controller
     public function remove($id)
     {
         $cart = session()->get('cart', []);
-        if(isset($cart[$id])) {
+        if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
         }
+
         return redirect()->route('cart.index');
     }
 
     public function updateQty(Request $request)
     {
-        $productId = $request->input('product_id');
-        $qty = $request->input('qty');
+        $validated = $request->validate([
+            'product_id' => ['required', 'string', 'max:80'],
+            'qty' => ['required', 'integer', 'min:1', 'max:99'],
+        ]);
+        $productId = $validated['product_id'];
+        $qty = $validated['qty'];
 
         $cart = session()->get('cart', []);
 
@@ -154,12 +155,12 @@ class CartController extends Controller
             session()->put('cart', $cart);
 
             $subtotal = $cart[$productId]['qty'] * $cart[$productId]['price']; // Pakai discounted
-            $total = collect($cart)->sum(fn($item) => $item['qty'] * $item['price']);
+            $total = collect($cart)->sum(fn ($item) => $item['qty'] * $item['price']);
 
             return response()->json([
                 'success' => true,
                 'subtotal' => number_format($subtotal, 0, ',', '.'),
-                'total' => number_format($total, 0, ',', '.')
+                'total' => number_format($total, 0, ',', '.'),
             ]);
         }
 

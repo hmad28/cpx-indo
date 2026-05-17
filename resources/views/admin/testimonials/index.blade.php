@@ -67,7 +67,7 @@
                                                     <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap :text-white">{{ $loop->iteration }}</th>
                                                     <td class="px-4 py-3">{{ $testimonial->name }}</td>
                                                     <td class="px-4 py-3">{{ $testimonial->position }}</td>
-                                                    <td class="px-4 py-3">{!! $testimonial->message !!}</td>
+                                                    <td class="px-4 py-3">{!! \App\Support\HtmlSanitizer::clean($testimonial->message) !!}</td>
                                                     <td class="px-4 py-2">
                                                         @if($testimonial->photo)
                                                             <img src="{{ asset('images/'.$testimonial->photo) }}" alt="Photo" class="w-14 h-14 object-cover rounded">
@@ -118,7 +118,7 @@
                                                 </div>
                                             </div>
                                             <div class="mt-2 text-sm text-gray-700 line-clamp-2">
-                                                {!! $testimonial->message !!}
+                                                {!! \App\Support\HtmlSanitizer::clean($testimonial->message) !!}
                                             </div>
                                             <img src="../images/{{ $testimonial->photo }}" class="w-16 h-16 rounded object-cover mt-3">
                                             <div class="mt-3 flex justify-end gap-1">
@@ -230,7 +230,7 @@
                                             <div>
                                                 <label for="message-{{ $testimonial->id }}" class="block mb-2 text-sm font-medium text-gray-900 :text-white">Pesan</label>
                                                 <input type="text" name="message" id="message-{{ $testimonial->id }}" class="message hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500" value="{{ $testimonial->message }}">
-                                                <div id="editor-update" class="editor">{!! old('message') !!}</div>
+                                                <div id="editor-update" class="editor">{!! \App\Support\HtmlSanitizer::clean(old('message', $testimonial->message)) !!}</div>
                                             </div>
                                             <div class="mb-4">
                                                 

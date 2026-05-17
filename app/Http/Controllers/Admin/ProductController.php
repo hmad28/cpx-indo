@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Size;
-use App\Models\Product;
-use App\Models\Category;
-use Illuminate\Support\Str;
-use App\Models\ProductImage;
-use Illuminate\Http\Request;
-use App\Models\WhatsappNumber;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\Size;
+use App\Models\WhatsappNumber;
+use App\Support\HtmlSanitizer;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,8 @@ class ProductController extends Controller
     {
         $products = Product::paginate(8);
         $categories = Category::all();
-         $sizes = Size::all();
+        $sizes = Size::all();
+
         return view('admin.products.index', compact(['products', 'categories', 'sizes']));
     }
 
@@ -68,7 +70,7 @@ class ProductController extends Controller
             if (count($files) > 0) {
                 // ambil gambar pertama jadi image utama
                 $mainImage = $files[0];
-                $imageName = time() . '_main.' . $mainImage->extension();
+                $imageName = time().'_main.'.$mainImage->extension();
                 $mainImage->move(public_path('images'), $imageName);
             }
         }
@@ -78,7 +80,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'image' => $imageName ?? 'default.jpg', // fallback biar gak error
             'size_image' => $sizeImageName,
-            'description' => $request->description,
+            'description' => HtmlSanitizer::clean($request->description),
             'kelebihan' => json_encode($request->kelebihan ?? []),
             'category_id' => $request->category_id,
         ]);
@@ -91,7 +93,7 @@ class ProductController extends Controller
 
             // skip gambar pertama (sudah dipakai sebagai image utama)
             foreach (array_slice($files, 1) as $file) {
-                $filename = time() . '_' . Str::random(8) . '.' . $file->extension();
+                $filename = time().'_'.Str::random(8).'.'.$file->extension();
                 $file->move(public_path('images'), $filename);
 
                 $product->images()->create([
@@ -136,7 +138,7 @@ class ProductController extends Controller
             $product->display_price = $product->price;
 
             return $product;
-        });; // Tetap sama (mungkin produk terkait?)
+        }); // Tetap sama (mungkin produk terkait?)
         $sizes = $product->sizes;
         $images = $product->images; // Ambil multiple images, diurutkan berdasarkan position
         // Cek diskon aktif (ambil yang persentase tertinggi jika multiple)
@@ -146,16 +148,16 @@ class ProductController extends Controller
             ->where('end_date', '>=', Carbon::today())
             ->sortByDesc('discount_percentage')
             ->first(); // Atau ->first() jika prioritas urutan ID
-        $hasDiscount = !is_null($activeDiscount);
+        $hasDiscount = ! is_null($activeDiscount);
         $discountPercentage = $hasDiscount ? $activeDiscount->discount_percentage : 0;
         $discountedPrice = $hasDiscount ? round($product->price * (1 - $discountPercentage / 100)) : $product->price; // Round ke integer jika harga integer
         // Pass variabel tambahan ke view
 
         $footerNumbers = WhatsappNumber::getActiveByPageAndPosition('Home', 'footer');
         $productCardNumbers = WhatsappNumber::getActiveByPageAndPosition('Home', 'product_card');
+
         return view('product-page', compact('product', 'sizes', 'products', 'images', 'hasDiscount', 'discountPercentage', 'discountedPrice', 'productCardNumbers'));
     }
-     
 
     /**
      * Show the form for editing the specified resource.
@@ -188,6 +190,11 @@ class ProductController extends Controller
         ]);
 
         // Handle kelebihan (JSON encode)
+        if (array_key_exists('description', $data)) {
+            $data['description'] = HtmlSanitizer::clean($data['description']);
+        }
+
+        // Handle kelebihan (JSON encode)
         if ($request->filled('kelebihan')) {
             $data['kelebihan'] = json_encode($request->kelebihan);
         }
@@ -195,17 +202,17 @@ class ProductController extends Controller
         // Handle size_image: upload baru atau delete
         if ($request->hasFile('size_image')) {
             // Hapus old size_image jika ada
-            if ($product->size_image && File::exists(public_path('images/' . $product->size_image))) {
-                File::delete(public_path('images/' . $product->size_image));
+            if ($product->size_image && File::exists(public_path('images/'.$product->size_image))) {
+                File::delete(public_path('images/'.$product->size_image));
             }
             $sizeImage = $request->file('size_image');
-            $sizeImageName = time() . '_' . Str::random(6) . '.' . $sizeImage->extension();
+            $sizeImageName = time().'_'.Str::random(6).'.'.$sizeImage->extension();
             $sizeImage->move(public_path('images'), $sizeImageName);
             $data['size_image'] = $sizeImageName;
         } elseif ($request->filled('delete_size_image')) {
             // Hapus existing size_image jika flag delete ada
-            if ($product->size_image && File::exists(public_path('images/' . $product->size_image))) {
-                File::delete(public_path('images/' . $product->size_image));
+            if ($product->size_image && File::exists(public_path('images/'.$product->size_image))) {
+                File::delete(public_path('images/'.$product->size_image));
             }
             $data['size_image'] = null;  // Set ke null di DB
         }
@@ -213,12 +220,12 @@ class ProductController extends Controller
         // DELETE existing images terlebih dahulu (berdasarkan delete_images[])
         if ($request->has('delete_images')) {
             $toDelete = ProductImage::whereIn('id', $request->delete_images)
-                        ->where('product_id', $product->id)
-                        ->get();
+                ->where('product_id', $product->id)
+                ->get();
 
             foreach ($toDelete as $img) {
-                if (File::exists(public_path('images/' . $img->path))) {
-                    File::delete(public_path('images/' . $img->path));
+                if (File::exists(public_path('images/'.$img->path))) {
+                    File::delete(public_path('images/'.$img->path));
                 }
                 $img->delete();
             }
@@ -233,9 +240,9 @@ class ProductController extends Controller
         }
 
         // Upload new images
-        if (!empty($newFiles)) {
+        if (! empty($newFiles)) {
             foreach ($newFiles as $file) {
-                $filename = time() . '_' . Str::random(8) . '.' . $file->extension();
+                $filename = time().'_'.Str::random(8).'.'.$file->extension();
                 $file->move(public_path('images'), $filename);
                 $product->images()->create(['path' => $filename]);
             }
@@ -269,7 +276,8 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'The product '. $product->name .' has been deleted successfully!');
+
+        return redirect()->route('products.index')->with('success', 'The product '.$product->name.' has been deleted successfully!');
     }
 
     public function setBestSeller(Request $request, Product $product)
@@ -294,6 +302,4 @@ class ProductController extends Controller
             'productCardNumbers' => $productCardNumbers,
         ]);
     }
-
-
 }

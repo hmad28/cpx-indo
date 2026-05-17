@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Testimonial;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Container\Attributes\Storage;
+use App\Models\Testimonial;
+use App\Support\HtmlSanitizer;
+use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
 {
     public function index()
     {
         $testimonials = Testimonial::latest()->paginate(10);
+
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
@@ -30,9 +31,10 @@ class TestimonialController extends Controller
         ]);
 
         $data = $request->only(['name', 'position', 'message']);
+        $data['message'] = HtmlSanitizer::clean($data['message']);
 
         if ($request->hasFile('photo')) {
-            $filename = time() . '.' . $request->photo->extension();
+            $filename = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('images'), $filename);
             $data['photo'] = $filename; // simpan path relatif
         }
@@ -57,15 +59,16 @@ class TestimonialController extends Controller
         ]);
 
         $data = $request->only(['name', 'position', 'message']);
+        $data['message'] = HtmlSanitizer::clean($data['message']);
 
         if ($request->hasFile('photo')) {
             // Hapus foto lama
-            if ($testimonial->photo && file_exists(public_path('images/' . $testimonial->photo))) {
-                unlink(public_path('images/' . $testimonial->photo));
+            if ($testimonial->photo && file_exists(public_path('images/'.$testimonial->photo))) {
+                unlink(public_path('images/'.$testimonial->photo));
             }
 
             // Upload foto baru
-            $filename = time() . '.' . $request->photo->extension();
+            $filename = time().'.'.$request->photo->extension();
             $request->photo->move(public_path('images'), $filename);
             $data['photo'] = $filename;
         }
@@ -78,6 +81,7 @@ class TestimonialController extends Controller
     public function destroy(Testimonial $testimonial)
     {
         $testimonial->delete();
+
         return redirect()->route('testimonials.index')->with('success', 'Testimonial deleted!');
     }
 }
