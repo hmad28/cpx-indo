@@ -14,14 +14,14 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="md:max-w-7xl 2xl:max-w-full mx-auto sm:px-6 lg:px-8 2xl:px-15">
-            <div class="bg-white overflow-hidden shadow-xs sm:rounded-lg">
+            <div class="bg-white overflow-hidden rounded-xl border border-gray-200 shadow-sm">
                 <div class="text-gray-900 p-5">
                     <section class=" p-3 sm:p-0 antialiased">
-                        <h2 class="text-xl font-bold pl-4 mb-4">Products</h2>
+                        <h2 class="text-xl font-black pl-4 mb-4 text-gray-950">Products</h2>
                         <div class="md:max-w-screen-xl 2xl:max-w-full">
-                            <div class="bg-white relative border sm:rounded-lg overflow-hidden">
+                            <div class="bg-white relative border border-gray-200 rounded-xl overflow-hidden">
 
                                 {{-- Success & Error --}}
                                 @if(session('success'))
@@ -53,7 +53,7 @@
                                                 </div>
                                                 <input type="text" id="simple-search" name="keyword"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-                                                        focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2"
+                                                        focus:ring-red-500 focus:border-red-500 block w-full pl-10 p-2"
                                                     placeholder="Search product">
                                             </div>
                                         </form>
@@ -62,8 +62,8 @@
                                                 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                                         <button type="button" id="createProductModalButton"
                                             data-modal-target="createProductModal" data-modal-toggle="createProductModal"
-                                            class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 
-                                                focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                            class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 
+                                                focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
                                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                 <path clip-rule="evenodd" fill-rule="evenodd"
                                                     d="M10 3a1 1 0 011 1v5h5a1 1 0 
@@ -79,7 +79,7 @@
                                 <div class="hidden md:block my-4 xl:px-2 md:max-w-6xl 2xl:max-w-7xl mx-auto">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                                         @forelse ($products as $product)
-                                            <div class="bg-white shadow-md rounded-lg p-5 flex flex-col relative h-full border border-gray-200 hover:border-black hover:shadow-lg transition-all duration-300 overflow-hidden">
+                                            <div class="bg-white shadow-sm rounded-xl p-5 flex flex-col relative h-full border border-gray-200 hover:border-red-300 hover:shadow-lg transition-all duration-300 overflow-hidden">
                                                 
                                                 {{-- Gambar Produk --}}
                                                 <div class="mb-4">
@@ -191,13 +191,13 @@
                                                             <button type="button" 
                                                                     data-modal-target="updateProductModal-{{ $product->id }}" 
                                                                     data-modal-toggle="updateProductModal-{{ $product->id }}" 
-                                                                    class="text-xs px-3 py-1.5 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 hover:border-black transition-all">
+                                                                    class="text-xs px-3 py-1.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-950 transition-all">
                                                                 Edit
                                                             </button>
                                                             <button type="button" 
                                                                     data-modal-target="deleteModal-{{ $product->id }}" 
                                                                     data-modal-toggle="deleteModal-{{ $product->id }}" 
-                                                                    class="text-xs px-3 py-1.5 border border-red-300 rounded-md text-red-600 font-medium hover:bg-red-50 hover:border-red-500 transition-all">
+                                                                    class="text-xs px-3 py-1.5 border border-red-600 rounded-lg text-red-600 font-medium hover:bg-red-600 hover:text-white transition-all">
                                                                 Delete
                                                             </button>
                                                         </div>
@@ -206,15 +206,15 @@
                                             </div>
                                         @empty
                                             {{-- Empty State: Belum ada produk --}}
-                                                <div class="col-span-full bg-white border border-black rounded-lg p-8 md:p-12 text-center shadow-md"> {{-- col-span-full agar span seluruh grid; tema putih-hitam; responsive padding --}}
+                                                <div class="col-span-full bg-white border border-gray-200 rounded-xl p-8 md:p-12 text-center shadow-sm">
                                                     <div class="space-y-4">
-                                                        <i class="fas fa-box-open text-4xl md:text-6xl text-gray-400 mb-4"></i> {{-- Icon box kosong; ukuran responsive; subtle gray untuk tidak dominan --}}
-                                                        <h3 class="text-xl md:text-2xl font-bold text-black">Belum Ada Produk</h3> {{-- Heading bold black --}}
-                                                        <p class="text-sm md:text-base text-black/70 max-w-md mx-auto">Database produk masih kosong. Mulai tambahkan produk baru untuk menampilkan di sini.</p> {{-- Pesan subtle black/70; centered dan limited width --}}
+                                                        <i class="fas fa-box-open text-4xl md:text-6xl text-gray-400 mb-4"></i>
+                                                        <h3 class="text-xl md:text-2xl font-black text-gray-950">Belum Ada Produk</h3>
+                                                        <p class="text-sm md:text-base text-gray-500 max-w-md mx-auto">Database produk masih kosong. Mulai tambahkan produk baru untuk menampilkan di sini.</p>
                                                         <button type="button" id="createProductModalButton"
                                                             data-modal-target="createProductModal" data-modal-toggle="createProductModal"
-                                                            class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 
-                                                                focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                                            class="flex items-center justify-center mx-auto text-white bg-red-600 hover:bg-red-700 
+                                                                focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">
                                                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                                 <path clip-rule="evenodd" fill-rule="evenodd"
                                                                     d="M10 3a1 1 0 011 1v5h5a1 1 0 
@@ -398,7 +398,7 @@
                                         </div>
 
                                     </div>
-                                    <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600 :hover:bg-blue-700 :focus:ring-blue-800">
+                                    <button type="submit" class="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                         <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                                         </svg>
@@ -629,7 +629,7 @@
                                         </div>
 
                                         <div class="flex items-center space-x-4">
-                                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600 :hover:bg-blue-700 :focus:ring-blue-800">Update product</button>
+                                            <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update product</button>
                                             <button type="button" class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :border-red-500 :text-red-500 :hover:text-white :hover:bg-red-600 :focus:ring-red-900" onclick="confirmDelete({{ $product->id }})"> {{-- Tambah onclick untuk delete confirm --}}
                                                 <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
