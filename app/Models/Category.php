@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Product;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -44,7 +43,7 @@ class Category extends Model
             }
         });
     }
-    
+
     public function products()
     {
         return $this->hasMany(Product::class);

@@ -1,23 +1,22 @@
 <?php
 
-use Carbon\Carbon;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\BestSellerController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WhatsappNumberController;
 use App\Models\Faq;
 use App\Models\Product;
-use App\Models\Category;
 use App\Models\Testimonial;
-use Illuminate\Http\Request;
 use App\Models\WhatsappNumber;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\DiskonController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BestSellerController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\WhatsappNumberController;
-use App\Http\Controllers\Admin\TestimonialController;
 
 Route::get('/login', function () {
     return view('welcome');
@@ -34,8 +33,8 @@ Route::get('/', function () {
         ->get()
         ->map(function ($product) {
             // Logic existing: is_new
-            $product->is_new = $product->created_at 
-                ? $product->created_at->gt(now()->subDays(30)) 
+            $product->is_new = $product->created_at
+                ? $product->created_at->gt(now()->subDays(30))
                 : false;
             // Logic diskon: Cek aktif dan set atribut
             $activeDiscount = $product->diskons
@@ -44,10 +43,11 @@ Route::get('/', function () {
                 ->where('end_date', '>=', Carbon::today())
                 ->sortByDesc('discount_percentage')
                 ->first();
-            $product->has_discount = !is_null($activeDiscount);
+            $product->has_discount = ! is_null($activeDiscount);
             $product->discount_percentage = $product->has_discount ? $activeDiscount->discount_percentage : 0;
             $product->discounted_price = $product->has_discount ? round($product->price * (1 - $product->discount_percentage / 100)) : $product->price;
             $product->display_price = $product->discounted_price; // Raw number untuk calc
+
             return $product;
         });
 
@@ -63,14 +63,14 @@ Route::get('/our-products', function (Request $request) {
     if ($request->filled('keyword')) {
         $keyword = $request->keyword;
         $query->where('name', 'like', "%{$keyword}%")
-              ->orWhereHas('category', function ($q) use ($keyword) {
-                  $q->where('name', 'like', "%{$keyword}%");
-              });
+            ->orWhereHas('category', function ($q) use ($keyword) {
+                $q->where('name', 'like', "%{$keyword}%");
+            });
     }
     $products = $query->get()->map(function ($product) {
         // Existing: Mark new product
-        $product->is_new = $product->created_at 
-            ? $product->created_at->gt(now()->subDays(30)) 
+        $product->is_new = $product->created_at
+            ? $product->created_at->gt(now()->subDays(30))
             : false;
         // New: Cek diskon aktif (mirip CartController fallback)
         $today = Carbon::today();
@@ -94,9 +94,11 @@ Route::get('/our-products', function (Request $request) {
             $product->discounted_price = $product->price;
             $product->discounted_price_formatted = number_format($product->price, 0, ',', '.');
         }
+
         return $product;
     });
     $productCardNumbers = WhatsappNumber::getActiveByPageAndPosition('Home', 'product_card');
+
     return view('our-products', compact('products', 'productCardNumbers'));
 })->name('our-products');
 
@@ -104,11 +106,13 @@ Route::get('/our-products/{category:slug}', [ProductController::class, 'byCatego
 
 Route::get('/about', function () {
     $faqs = Faq::all();
+
     return view('about', compact('faqs'));
 })->name('about');
 
 Route::get('/testimonials', function () {
     $testimonials = Testimonial::all();
+
     return view('testimonials', compact('testimonials'));
 })->name('testimonials');
 
@@ -120,7 +124,6 @@ Route::get('/custom', function () {
 })->name('custom');
 
 Route::get('/product-page/{product:slug}', [ProductController::class, 'show'])->name('product-page');
-
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
