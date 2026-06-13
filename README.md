@@ -1,104 +1,98 @@
-# CPX Official
+# CPX Official — Next.js + Neon
 
-CPX Official adalah aplikasi katalog dan dashboard admin untuk bisnis jersey custom. Aplikasi ini memakai Laravel, Blade, Tailwind, Alpine, Flowbite, dan Vite untuk mengelola produk, kategori, best seller, diskon, FAQ, testimoni, nomor WhatsApp, cart, serta halaman publik.
+CPX Official sekarang menggunakan arsitektur full-stack JavaScript serverless:
 
-## Fitur Utama
+- **Next.js App Router** untuk storefront, Server Components, dan routing.
+- **React Client Component** untuk filter produk, cart, animasi, dan WhatsApp checkout.
+- **Next.js Route Handlers** untuk API serverless.
+- **Neon PostgreSQL** melalui HTTP serverless driver.
+- **Vercel-ready** tanpa custom Express/Node server.
 
-- Landing page dengan desain CPX baru, hero visual, section about, katalog produk, dan CTA custom jersey.
-- Katalog produk dengan filter `All`, `Best Seller`, `New`, dan `Custom Design`.
-- Halaman detail produk dengan galeri, ukuran, kelebihan produk, harga diskon, cart, dan CTA WhatsApp.
-- Cart sederhana berbasis session.
-- Dashboard admin "CPX Command Center" dengan metrik operasional, health checklist, produk terbaru, distribusi kategori, diskon aktif, dan quick actions.
-- CRUD admin untuk produk, kategori, testimoni, FAQ, best seller, diskon, dan nomor WhatsApp.
-- Auth Laravel Breeze dengan login via email atau username.
-- Seeder demo untuk user, kategori, produk, dan ukuran.
+Laravel lama masih tersedia sebagai arsip referensi migrasi data. Runtime utama aplikasi berada di `app/`, `components/`, dan `lib/`.
 
-## Stack
+## Menjalankan Lokal
 
-- PHP `^8.2`
-- Laravel `^12.0`
-- Pest `^3.8`
-- Laravel Pint
-- Vite `^7.0`
-- Tailwind CSS `^4.1`
-- Alpine.js
-- Flowbite
+Gunakan Node.js 20.19 atau lebih baru:
 
-## Setup Lokal
+```bash
+npm install
+cp .env.example .env.local
+npm run db:setup
+npm run dev
+```
 
-1. Install dependency PHP dan Node:
-   - `composer install`
-   - `npm install`
+Buka `http://localhost:3000`.
 
-2. Siapkan environment:
-   - `cp .env.example .env`
-   - `php artisan key:generate`
+Jika `DATABASE_URL` belum diisi, storefront tetap berjalan dengan demo data lokal. API akan mengembalikan `source: "demo"`.
 
-3. Siapkan SQLite lokal:
-   - `touch database/database.sqlite`
-   - Pastikan `.env` memakai `DB_CONNECTION=sqlite`.
+## Neon Database
 
-4. Jalankan migrasi dan seed:
-   - `php artisan migrate:fresh --seed`
+1. Buat project di [Neon](https://neon.tech).
+2. Buka **Connect** dan salin pooled connection string.
+3. Simpan sebagai `DATABASE_URL` di `.env.local`.
+4. Jalankan:
 
-5. Jalankan aplikasi:
-   - Terminal 1: `php artisan serve`
-   - Terminal 2: `npm run dev`
+```bash
+npm run db:setup
+```
 
-6. Buka aplikasi:
-   - Public site: `http://localhost:8000`
-   - Login admin: `http://localhost:8000/login`
+Schema idempotent berada di `database/neon-schema.sql` dan menyediakan:
 
-## Akun Demo
+- `categories`
+- `products`
+- `testimonials`
+- `site_settings`
 
-Seeder membuat user admin demo:
+Koneksi database hanya digunakan pada server melalui `lib/db.js`. Connection string tidak pernah dikirim ke browser.
 
-- Username: `test`
-- Email: `test@example.com`
-- Password: `admin123`
+## Struktur Next.js
 
-## Command Penting
+| Path | Fungsi |
+| --- | --- |
+| `app/layout.js` | Metadata, font, dan root layout |
+| `app/page.js` | Server Component storefront |
+| `components/storefront.js` | UI interaktif dan cart |
+| `app/api/storefront/route.js` | API serverless data storefront |
+| `app/api/health/route.js` | Health check deployment |
+| `lib/db.js` | Query Neon server-side |
+| `database/neon-schema.sql` | Schema dan initial data |
+| `scripts/setup-database.mjs` | Menjalankan schema ke Neon |
 
-- `php artisan test` - menjalankan seluruh test Laravel/Pest.
-- `npm run build` - build asset frontend production.
-- `./vendor/bin/pint` - format PHP sesuai Laravel Pint.
-- `composer run dev` - menjalankan server Laravel, queue listener, pail, dan Vite secara bersamaan.
+## Commands
 
-## Struktur Penting
+```bash
+npm run dev       # Next.js development server
+npm run build     # Production build
+npm start         # Menjalankan production build
+npm run lint      # ESLint
+npm run db:setup  # Setup Neon schema
+```
 
-- `routes/web.php` - route public, auth, cart, dashboard, dan admin.
-- `app/Http/Controllers/DashboardController.php` - agregasi data dashboard admin.
-- `resources/views/components/header.blade.php` - header publik global.
-- `resources/views/components/footer.blade.php` - footer publik global.
-- `resources/views/layouts/app.blade.php` - layout area admin/authenticated.
-- `resources/views/layouts/guest.blade.php` - layout login/register.
-- `resources/views/dashboard/index.blade.php` - dashboard admin.
-- `resources/views/home.blade.php` - landing page.
-- `resources/views/our-products.blade.php` - katalog produk.
-- `public/css/style.css` dan `resources/css/app.css` - design system CPX.
+## API
 
-## Catatan Desain
+### `GET /api/storefront`
 
-Desain terbaru memakai arah visual CPX yang konsisten:
+Mengembalikan:
 
-- Header dan footer publik gelap dengan rounded container.
-- Background warm cream untuk halaman publik.
-- Aksen merah CPX untuk CTA, badge, dan hover state.
-- Card modern dengan radius besar dan shadow lembut.
-- Auth split layout untuk login/register.
-- Admin shell dan dashboard memakai gaya "Command Center".
+- `products`
+- `testimonials`
+- `settings`
+- `source`: `neon`, `demo`, atau `fallback`
 
-## Testing
+### `GET /api/health`
 
-Sebelum merge, jalankan:
+Mengembalikan runtime Next.js serverless dan status konfigurasi database.
 
-- `php artisan test`
-- `npm run build`
+## Deploy ke Vercel
 
-Untuk perubahan UI, lakukan manual check minimal pada:
+1. Import repository ke Vercel.
+2. Framework Preset akan terdeteksi sebagai **Next.js**.
+3. Tambahkan environment variable:
 
-- `/`
-- `/our-products`
-- `/custom`
-- `/login`
-- `/dashboard`
+```env
+DATABASE_URL=postgresql://...
+```
+
+4. Deploy. Tidak perlu mengatur custom start command atau server process.
+
+`next.config.mjs` mengaktifkan standalone output agar aplikasi juga dapat dijalankan pada platform Node/serverless lain.
