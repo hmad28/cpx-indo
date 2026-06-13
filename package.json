@@ -1,24 +1,24 @@
 {
     "$schema": "https://json.schemastore.org/package.json",
+    "name": "cpx-official",
+    "version": "2.0.0",
     "private": true,
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "@tailwindcss/forms": "^0.5.2",
-        "@tailwindcss/postcss": "^4.1.11",
-        "@tailwindcss/vite": "^4.1.11",
-        "alpinejs": "^3.4.2",
-        "axios": "^1.8.2",
-        "concurrently": "^9.0.1",
-        "laravel-vite-plugin": "^2.0.0",
-        "tailwindcss": "^4.1.11",
-        "vite": "^7.0.4"
+        "dev": "node --watch --env-file-if-exists=.env server/index.js",
+        "dev:web": "vite",
+        "start": "node --env-file-if-exists=.env server/index.js",
+        "db:setup": "node --env-file-if-exists=.env server/setup-database.js",
+        "check": "node --check server/index.js && node --check server/database.js && node --check src/main.js && vite build"
     },
     "dependencies": {
-        "aos": "^2.3.4",
-        "flowbite": "^3.1.2"
+        "@neondatabase/serverless": "^1.0.1"
+    },
+    "devDependencies": {
+        "vite": "^7.0.4"
+    },
+    "engines": {
+        "node": ">=20.19.0"
     }
 }

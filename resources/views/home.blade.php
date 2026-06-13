@@ -12,6 +12,7 @@
     <title>CPX Official | Sport Wear Premium Quality</title>
 </head>
 <body class="font-body cpx-shell">
+    <div class="cpx-scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
     <x-header></x-header>
 
     <main>
@@ -31,13 +32,18 @@
             <div class="absolute inset-0 flex items-center">
                 <div class="cpx-container pt-16 text-white">
                     <span class="cpx-eyebrow">Custom Jersey Studio</span>
-                    <h1 class="cpx-heading mt-6 max-w-4xl text-7xl md:text-9xl leading-none">Bikin jersey tim yang kelihatan beda.</h1>
+                    <h1 class="cpx-heading mt-6 max-w-4xl text-7xl md:text-9xl leading-none">Jersey tim yang <span class="cpx-text-stroke">nggak pasaran.</span></h1>
                     <p class="mt-6 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
                         CPX bantu tim, komunitas, dan brand tampil solid lewat desain custom, bahan nyaman, dan proses produksi yang rapi.
                     </p>
                     <div class="mt-10 flex flex-col gap-4 sm:flex-row">
-                        <a href="{{ route('our-products') }}" class="cpx-btn-primary">Lihat Katalog</a>
-                        <a href="{{ route('custom') }}" class="cpx-btn-secondary">Mulai Custom</a>
+                        <a href="{{ route('custom') }}" class="cpx-btn-primary">Konsultasi Gratis <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                        <a href="{{ route('our-products') }}" class="cpx-btn-secondary">Lihat Katalog</a>
+                    </div>
+                    <div class="mt-12 grid max-w-2xl grid-cols-3 gap-3 border-t border-white/15 pt-6">
+                        <div><strong class="block text-xl font-black md:text-3xl">500+</strong><span class="text-[10px] uppercase tracking-wider text-white/50 md:text-xs">Tim dilayani</span></div>
+                        <div><strong class="block text-xl font-black md:text-3xl">7–14</strong><span class="text-[10px] uppercase tracking-wider text-white/50 md:text-xs">Hari produksi</span></div>
+                        <div><strong class="block text-xl font-black md:text-3xl">100%</strong><span class="text-[10px] uppercase tracking-wider text-white/50 md:text-xs">Custom desain</span></div>
                     </div>
                 </div>
             </div>
@@ -62,7 +68,7 @@
             </div> --}}
         </section>
 
-        <section id="about" class="cpx-section overflow-hidden bg-gray-950">
+        <section id="about" class="cpx-section overflow-hidden bg-gray-950" data-reveal>
             <div class="cpx-container">
                 <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
                     <div>
@@ -108,7 +114,33 @@
             </div>
         </section>
 
-        <section id="slider2" class="relative overflow-hidden mt-[52px] sm:mt-0">
+        <section class="cpx-section overflow-hidden bg-[#0b0b0d]" data-reveal>
+            <div class="cpx-container">
+                <div class="mb-12 max-w-3xl">
+                    <span class="cpx-eyebrow">Gampang & Transparan</span>
+                    <h2 class="cpx-heading mt-4 text-6xl text-white md:text-8xl">Dari ide sampai jadi jersey.</h2>
+                    <p class="mt-5 leading-7 text-white/60">Pilih tahap di bawah untuk melihat bagaimana CPX mengubah ide tim kamu menjadi jersey yang siap dipakai.</p>
+                </div>
+                <div class="cpx-process" data-process>
+                    <div class="grid gap-3 md:grid-cols-4" role="tablist" aria-label="Proses custom jersey">
+                        <button class="cpx-process-tab is-active" data-process-tab="0" role="tab" aria-selected="true"><span>01</span><strong>Konsultasi</strong></button>
+                        <button class="cpx-process-tab" data-process-tab="1" role="tab" aria-selected="false"><span>02</span><strong>Desain</strong></button>
+                        <button class="cpx-process-tab" data-process-tab="2" role="tab" aria-selected="false"><span>03</span><strong>Produksi</strong></button>
+                        <button class="cpx-process-tab" data-process-tab="3" role="tab" aria-selected="false"><span>04</span><strong>Pengiriman</strong></button>
+                    </div>
+                    <div class="cpx-process-panel mt-5">
+                        <div>
+                            <span class="text-xs font-black uppercase tracking-[.25em] text-red-500" data-process-label>Step 01</span>
+                            <h3 class="cpx-heading mt-3 text-5xl text-white md:text-6xl" data-process-title>Ceritakan kebutuhan timmu.</h3>
+                            <p class="mt-4 max-w-2xl leading-7 text-white/60" data-process-copy>Diskusikan jenis olahraga, jumlah jersey, warna, referensi, dan target waktu melalui WhatsApp. Tim kami akan bantu memilih opsi terbaik tanpa biaya konsultasi.</p>
+                        </div>
+                        <div class="cpx-process-icon"><i class="fa-solid fa-comments" data-process-icon></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="slider2" class="relative overflow-hidden mt-[52px] sm:mt-0" data-reveal>
             <div class="slider2">
                 <div class="slide relative bg-black text-white md:bg-right w-full xl:h-screen flex items-center">
                     <img src="{{ asset('images/slider1.png') }}" alt="" >
@@ -139,7 +171,7 @@
             </div>
         </section>
 
-        <section id="products" class="cpx-section"
+        <section id="products" class="cpx-section" data-reveal
             x-data="{
                 filter: 'all',
                 products: {{ $products->map(fn($p) => [
@@ -258,7 +290,7 @@
                                                     class="mt-3 w-full rounded-lg border border-gray-200 bg-gray-950 px-3 py-2.5 text-center text-xs font-bold text-white transition hover:bg-red-600 hover:border-red-600 xl:text-base"
                                                     target="_blank"
                                                 >
-                                                    Beli Sekarang 1
+                                                    Beli Sekarang
                                                 </a>
                                             @endforeach
 
@@ -312,6 +344,12 @@
 
     <x-footer></x-footer>
 
+    <a href="{{ route('custom') }}" class="cpx-floating-cta" aria-label="Konsultasi custom jersey">
+        <span class="cpx-floating-cta__pulse"></span>
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="hidden sm:inline">Konsultasi Jersey</span>
+    </a>
+
     <x-script></x-script>
 
     <script>
@@ -354,6 +392,17 @@
                 function startAutoSlide() {
                     interval = setInterval(() => goToSlide(current + 1), 4000);
                 }
+
+                slider.parentElement.addEventListener("mouseenter", () => clearInterval(interval));
+                slider.parentElement.addEventListener("mouseleave", startAutoSlide);
+                document.addEventListener("visibilitychange", () => {
+                    clearInterval(interval);
+                    if (!document.hidden) startAutoSlide();
+                });
+                document.addEventListener("keydown", event => {
+                    if (event.key === "ArrowLeft") goToSlide(current - 1, true);
+                    if (event.key === "ArrowRight") goToSlide(current + 1, true);
+                });
 
                 startAutoSlide();
 

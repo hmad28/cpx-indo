@@ -1,104 +1,88 @@
-# CPX Official
+# CPX Official — JavaScript + Neon
 
-CPX Official adalah aplikasi katalog dan dashboard admin untuk bisnis jersey custom. Aplikasi ini memakai Laravel, Blade, Tailwind, Alpine, Flowbite, dan Vite untuk mengelola produk, kategori, best seller, diskon, FAQ, testimoni, nomor WhatsApp, cart, serta halaman publik.
-
-## Fitur Utama
-
-- Landing page dengan desain CPX baru, hero visual, section about, katalog produk, dan CTA custom jersey.
-- Katalog produk dengan filter `All`, `Best Seller`, `New`, dan `Custom Design`.
-- Halaman detail produk dengan galeri, ukuran, kelebihan produk, harga diskon, cart, dan CTA WhatsApp.
-- Cart sederhana berbasis session.
-- Dashboard admin "CPX Command Center" dengan metrik operasional, health checklist, produk terbaru, distribusi kategori, diskon aktif, dan quick actions.
-- CRUD admin untuk produk, kategori, testimoni, FAQ, best seller, diskon, dan nomor WhatsApp.
-- Auth Laravel Breeze dengan login via email atau username.
-- Seeder demo untuk user, kategori, produk, dan ukuran.
+Storefront CPX adalah aplikasi JavaScript penuh untuk bisnis produksi jersey custom sekaligus penjualan produk sportswear.
 
 ## Stack
 
-- PHP `^8.2`
-- Laravel `^12.0`
-- Pest `^3.8`
-- Laravel Pint
-- Vite `^7.0`
-- Tailwind CSS `^4.1`
-- Alpine.js
-- Flowbite
+- Vite SPA (HTML, CSS, dan JavaScript tanpa framework)
+- Node.js HTTP API
+- Neon PostgreSQL melalui `@neondatabase/serverless`
+- LocalStorage untuk cart pelanggan
+- WhatsApp checkout
 
-## Setup Lokal
+Laravel lama masih tersimpan untuk referensi migrasi data/admin, tetapi storefront utama tidak lagi membutuhkan PHP atau Blade.
 
-1. Install dependency PHP dan Node:
-   - `composer install`
-   - `npm install`
+## Menjalankan Lokal
 
-2. Siapkan environment:
-   - `cp .env.example .env`
-   - `php artisan key:generate`
+Persyaratan: Node.js 20.19 atau lebih baru.
 
-3. Siapkan SQLite lokal:
-   - `touch database/database.sqlite`
-   - Pastikan `.env` memakai `DB_CONNECTION=sqlite`.
+```bash
+npm install
+cp .env.example .env
+npm run build
+npm start
+```
 
-4. Jalankan migrasi dan seed:
-   - `php artisan migrate:fresh --seed`
+Buka `http://localhost:3000`.
 
-5. Jalankan aplikasi:
-   - Terminal 1: `php artisan serve`
-   - Terminal 2: `npm run dev`
+Untuk frontend development dengan hot reload:
 
-6. Buka aplikasi:
-   - Public site: `http://localhost:8000`
-   - Login admin: `http://localhost:8000/login`
+```bash
+# Terminal 1 — API
+npm run dev
 
-## Akun Demo
+# Terminal 2 — Vite
+npm run dev:web
+```
 
-Seeder membuat user admin demo:
+Vite berjalan pada `http://localhost:5173` dan meneruskan request `/api` ke port `3000`.
 
-- Username: `test`
-- Email: `test@example.com`
-- Password: `admin123`
+## Menyiapkan Neon
 
-## Command Penting
+1. Buat project PostgreSQL di [Neon](https://neon.tech).
+2. Salin pooled connection string dari menu **Connect**.
+3. Isi `DATABASE_URL` di `.env`.
+4. Jalankan schema dan sample data:
 
-- `php artisan test` - menjalankan seluruh test Laravel/Pest.
-- `npm run build` - build asset frontend production.
-- `./vendor/bin/pint` - format PHP sesuai Laravel Pint.
-- `composer run dev` - menjalankan server Laravel, queue listener, pail, dan Vite secara bersamaan.
+```bash
+npm run db:setup
+```
 
-## Struktur Penting
+Schema berada di `database/neon-schema.sql`. Bila `DATABASE_URL` belum tersedia atau Neon sedang tidak dapat diakses, API otomatis memakai data demo agar storefront tetap dapat dijalankan.
 
-- `routes/web.php` - route public, auth, cart, dashboard, dan admin.
-- `app/Http/Controllers/DashboardController.php` - agregasi data dashboard admin.
-- `resources/views/components/header.blade.php` - header publik global.
-- `resources/views/components/footer.blade.php` - footer publik global.
-- `resources/views/layouts/app.blade.php` - layout area admin/authenticated.
-- `resources/views/layouts/guest.blade.php` - layout login/register.
-- `resources/views/dashboard/index.blade.php` - dashboard admin.
-- `resources/views/home.blade.php` - landing page.
-- `resources/views/our-products.blade.php` - katalog produk.
-- `public/css/style.css` dan `resources/css/app.css` - design system CPX.
+## Commands
 
-## Catatan Desain
+| Command | Kegunaan |
+| --- | --- |
+| `npm run dev` | Menjalankan API Node dengan watch mode |
+| `npm run dev:web` | Menjalankan Vite development server |
+| `npm run build` | Membuat production build ke `dist/` |
+| `npm start` | Menyajikan API dan production build |
+| `npm run db:setup` | Membuat tabel dan sample data di Neon |
+| `npm run check` | Memeriksa sintaks JavaScript dan production build |
 
-Desain terbaru memakai arah visual CPX yang konsisten:
+## API
 
-- Header dan footer publik gelap dengan rounded container.
-- Background warm cream untuk halaman publik.
-- Aksen merah CPX untuk CTA, badge, dan hover state.
-- Card modern dengan radius besar dan shadow lembut.
-- Auth split layout untuk login/register.
-- Admin shell dan dashboard memakai gaya "Command Center".
+- `GET /api/health` — status server dan mode database.
+- `GET /api/storefront` — produk, testimoni, dan pengaturan storefront.
 
-## Testing
+## Deployment
 
-Sebelum merge, jalankan:
+Build command:
 
-- `php artisan test`
-- `npm run build`
+```bash
+npm install && npm run build
+```
 
-Untuk perubahan UI, lakukan manual check minimal pada:
+Start command:
 
-- `/`
-- `/our-products`
-- `/custom`
-- `/login`
-- `/dashboard`
+```bash
+npm start
+```
+
+Environment production wajib:
+
+```env
+DATABASE_URL=postgresql://...
+PORT=3000
+```
